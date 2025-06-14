@@ -1,0 +1,13 @@
+.roud-border {
+  border: solid 1px var(--on-tertiary-color);
+  border-radius: 50%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  .icon{
+    font-size: 60px;
+    color: var(--clr-red-400);
+  }
+}

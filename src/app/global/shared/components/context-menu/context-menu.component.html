@@ -1,0 +1,21 @@
+<button class="tertiary" mat-button [matMenuTriggerFor]="menu">
+  {{ btnLable }}
+  <mat-icon class="m-0" [fontIcon]="btnIcon"></mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  @for (item of matMenuList; track $index) {
+  <!--  -->
+  @if (item?.route) {
+  <button mat-menu-item [routerLink]="item?.route">
+    <span>{{ item.label }}</span>
+    <mat-icon class="m-0" *ngIf="item.icon" [fontIcon]="item.icon"></mat-icon>
+  </button>
+  } @else {
+  <button mat-menu-item (click)="item?.onClick()">
+    <span>{{ item.label }}</span>
+    <mat-icon class="m-0" *ngIf="item.icon" [fontIcon]="item.icon"></mat-icon>
+  </button>
+  }
+  <!--  -->
+  }
+</mat-menu>

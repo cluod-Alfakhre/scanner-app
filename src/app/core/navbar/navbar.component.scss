@@ -1,0 +1,22 @@
+:host{
+  display: block;
+  margin-bottom: 2rem;
+}
+nav {
+  box-shadow: 0px 0px 0.15rem var(--box-shadow);
+}
+
+.logo {
+  width: 55px;
+}
+
+.links {
+  a {
+    font-size: var(--fs-425);
+    padding: 5px 10px;
+    display: block;
+    &:hover, &.active{
+        color: var(--accent-color);
+    }
+  }
+}

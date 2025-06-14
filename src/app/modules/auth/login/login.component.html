@@ -1,0 +1,37 @@
+<main>
+  <form class="example-form" [formGroup]="loginForm" (ngSubmit)="confirm()">
+    <h1 class="fs-600 text-center mb-3">تسجيل الدخول</h1>
+    <mat-form-field class="example-full-width">
+      <mat-label>اسم المستخدم</mat-label>
+      <input matInput formControlName="username" placeholder="username" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>كلمة المرور</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        placeholder="password"
+        [type]="showPassword ? 'text' : 'password'"
+      />
+      <button
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        type="button"
+        (click)="showPassword = !showPassword"
+      >
+        <mat-icon
+          [fontIcon]="showPassword ? 'visibility' : 'visibility_off'"
+        ></mat-icon>
+      </button>
+    </mat-form-field>
+
+    <div class="wrapper flex-align justify-content-end">
+      <button class="accent" mat-fab extended>
+        <mat-icon>login</mat-icon>
+        تسجيل
+      </button>
+    </div>
+  </form>
+</main>

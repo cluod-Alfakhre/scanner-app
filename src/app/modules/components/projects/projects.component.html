@@ -1,0 +1,13 @@
+<main>
+  <div class="flex-align justify-content-between mb-3">
+    <div class="empty flex-grow-1"></div>
+    <button class="tertiary" mat-fab extended (click)="openUpsertProject()">
+      <mat-icon>add</mat-icon>
+      إضافة مشروع
+    </button>
+  </div>
+  <ag-grid-angular
+    [rowData]="(projectsList$ | async) || []"
+    [columnDefs]="colDefs"
+  />
+</main>

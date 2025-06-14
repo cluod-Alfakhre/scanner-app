@@ -1,0 +1,32 @@
+<h2 mat-dialog-title class="fs-500">{{ data ? "تعديل" : "إضافة" }} مدينة</h2>
+<form [formGroup]="cityForm" (ngSubmit)="confirm()">
+  <mat-dialog-content class="custom-dialog">
+    <div class="field-wrapper flex-grow-1">
+      <p class="field-title">اسم المدينة</p>
+      <mat-form-field>
+        <mat-label>أكتب اسم المدينة هنا...</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+    </div>
+    <div class="field-wrapper flex-grow-1">
+      <p class="field-title">رقم المدينة</p>
+      <mat-form-field>
+        <mat-label>أكتب رقم المدينة هنا...</mat-label>
+        <input matInput formControlName="cityNumber" type="number" />
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button
+      class="tertiary-light shadow"
+      mat-button
+      type="button"
+      (click)="close()"
+    >
+      إغلاق
+    </button>
+    <button class="accent" mat-button [disabled]="disableUpsertButton">
+      {{ data ? "تعديل" : "إضافة" }} مدينة
+    </button>
+  </mat-dialog-actions>
+</form>

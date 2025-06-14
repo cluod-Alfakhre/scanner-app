@@ -1,0 +1,57 @@
+<nav class="p-3 radius-1 tertiary-bg flex-align mb-4">
+  <div class="wrapper flex-align gap-2">
+    <button
+      class="tertiary-light"
+      mat-fab
+      aria-label="toggle the app theme"
+      (click)="toggleTheme()"
+    >
+      <mat-icon>dark_mode</mat-icon>
+    </button>
+    <button
+      class="tertiary-light"
+      mat-fab
+      aria-label="toggle the app theme"
+      (click)="logout()"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+
+  <ul class="links flex-align justify-content-center gap-2 flex-grow-1">
+    <li>
+      <a class="scale" routerLink="users" routerLinkActive="active">
+        المستخدمين
+      </a>
+    </li>
+    <li>
+      <a class="scale" routerLink="owners" routerLinkActive="active">
+        ملاك المزارع
+      </a>
+    </li>
+    <li>
+      <a class="scale" routerLink="realestates" routerLinkActive="active">
+        المزارع
+      </a>
+    </li>
+    <li>
+      <a class="scale" routerLink="projects" routerLinkActive="active">
+        المشاريع
+      </a>
+    </li>
+    <li>
+      <a class="scale" routerLink="cities" routerLinkActive="active"> المدن </a>
+    </li>
+    <li>
+      <a class="scale" routerLink="files-tree" routerLinkActive="active">
+        الملفات
+      </a>
+    </li>
+  </ul>
+
+  <div class="logo scale">
+    <img src="/images/logo.png" alt="" />
+  </div>
+</nav>
+
+<app-breadcrumb></app-breadcrumb>

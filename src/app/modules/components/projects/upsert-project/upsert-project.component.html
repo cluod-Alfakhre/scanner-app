@@ -1,0 +1,53 @@
+@let selectInputsData = selectInputsData$| async;
+
+<h2 mat-dialog-title class="fs-500">{{ data ? "تعديل" : "إضافة" }} مشروع</h2>
+<form [formGroup]="projectForm" (ngSubmit)="confirm()">
+  <mat-dialog-content class="custom-dialog">
+    <div class="field-wrapper flex-grow-1">
+      <p class="field-title">اسم المشروع</p>
+      <mat-form-field>
+        <mat-label>أكتب اسم المشروع هنا...</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+    </div>
+    <div class="flex-align gap-2 mb-3">
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">رقم المشروع</p>
+        <mat-form-field>
+          <mat-label>أكتب رقم المشروع هنا...</mat-label>
+          <input
+            matInput
+            formControlName="projectNumber"
+            type="number"
+            [max]="99"
+            [min]="1"
+          />
+        </mat-form-field>
+      </div>
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">المدينة التابعه له</p>
+        <mat-form-field>
+          <mat-label>اختر مدينة</mat-label>
+          <mat-select formControlName="cityId">
+            @for (city of selectInputsData?.cities; track $index) {
+            <mat-option [value]="city.id">{{ city.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button
+      class="tertiary-light shadow"
+      mat-button
+      type="button"
+      (click)="close()"
+    >
+      إغلاق
+    </button>
+    <button class="accent" mat-button [disabled]="disableUpsertButton">
+      {{ data ? "تعديل" : "إضافة" }} مشروع
+    </button>
+  </mat-dialog-actions>
+</form>

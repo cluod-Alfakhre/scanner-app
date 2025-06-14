@@ -1,1 +1,417 @@
-/* You can add global styles to this file, and also import other style files */
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap");
+
+@import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS (required)
+@import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme CSS
+
+:root {
+  color-scheme: light dark;
+  --clr-neutral-900: hsl(227, 75%, 14%);
+  --clr-neutral-800: hsl(226, 25%, 17%);
+  --clr-neutral-700: hsl(225, 23%, 24%);
+  --clr-neutral-600: hsl(226, 11%, 37%);
+  --clr-neutral-300: hsl(0, 0%, 78%);
+  --clr-neutral-200: hsl(217, 61%, 90%);
+  --clr-neutral-100: hsl(0, 0%, 93%);
+  --clr-neutral-0: hsl(200, 60%, 99%);
+  --clr-orange: hsl(30.15deg 84.81% 53.53%);
+  --clr-red-700: hsl(3, 77%, 44%);
+  --clr-red-500: hsl(3, 71%, 56%);
+  --clr-red-400: hsl(3, 86%, 64%);
+  --clr-light-gradient: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%);
+  --clr-dark-gradient: linear-gradient(180deg, #040918 0%, #091540 100%);
+  --fw-light: 400;
+  --fw-regular: 500;
+  --fw-bold: 700;
+
+  --primary-color: var(--clr-light-gradient); //--bg-body
+  --on-primary-color: var(--clr-neutral-900);
+  --tertiary-color: var(--clr-neutral-0); //--bg-button
+  --tertiary-color-light: var(--clr-neutral-0); //--bg-button
+  --on-tertiary-color: var(--clr-neutral-900); //--clr-heading
+  --accent-color: var(--clr-orange); //--bg-button
+  --on-accent-color: var(--clr-neutral-0); //--clr-heading
+  --bg-toggle: var(--clr-neutral-100); //--bg-toggle
+  --bg-toggle-hover: var(--clr-neutral-300); //--bg-toggle-hover
+  --box-shadow: var(--clr-neutral-300); //--box-shadow
+  --box-shadow-button: var(--clr-neutral-300); //--box-shadow-button
+
+  --gray-color: var(--clr-neutral-300);
+
+  --success-color: #36d751;
+
+  --warning-color: #f2794c;
+
+  --danger-color: #ee4848;
+
+  //typography-phone
+  --fs-xl: 3rem;
+  --fs-600: 1.4rem;
+  --fs-500: 1rem;
+  --fs-400: 0.7rem;
+  --fs-300: 0.5rem;
+
+  --fw-bold: bold;
+  --fw-500: 500;
+  --fw-400: 400;
+  --fw-300: 300;
+  /////////////
+  --nav-hieght: 72px;
+
+  @include mat.theme-overrides(
+    (
+      on-surface: var(--clr-neutral-900),
+      primary: var(--accent-color),
+    )
+  );
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b7b7b7;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #969696;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+@mixin utility($name, $propery: null, $value) {
+  .#{$name} {
+    @if $propery {
+      #{$propery}: $value;
+    }
+  }
+}
+
+@include utility("grid", "display", grid);
+@include utility("flex", "display", flex);
+@include utility("self-center-x", "justify-self", center);
+@include utility("self-end-x", "justify-self", end);
+@include utility("content-cx", "justify-content", center);
+@include utility("content-sb", "justify-content", space-between);
+@include utility("content-end-x", "justify-content", end);
+@include utility("content-start-x", "justify-content", start);
+@include utility("content-end-y", "align-items", end);
+@include utility("content-start-y", "align-items", start);
+@include utility("center-items", "justify-items", center);
+@include utility("content-cy", "align-items", center);
+@include utility("grow", "flex-grow", 1);
+@include utility("pos-relative", "position", relative);
+@include utility("pos-absolute", "position", absolute);
+@include utility(
+  "border-bottom",
+  "border-bottom",
+  1px solid var(--tertiary-light-color)
+);
+@include utility("border-full", "border", 1px solid var(--tertiary-color));
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: "PT Serif",
+      density: 0,
+    )
+  );
+} /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Rubik", sans-serif;
+  direction: rtl;
+  background: var(--primary-color);
+  color: var(--on-tertiary-color);
+  --mdc-filled-text-field-container-color: hsl(200deg 12.04% 95.75%);
+}
+
+body.dark_mode {
+  --primary-color: var(--clr-dark-gradient); //--bg-body
+  --tertiary-color: var(--clr-neutral-800); //--bg-button
+  --on-primary-color: var(--clr-neutral-0); //--clr-heading
+  --on-tertiary-color: var(--clr-neutral-0); //--clr-heading
+  --tertiary-color-light: var(--clr-neutral-700); //--bg-button
+  --on-accent-color: var(--clr-neutral-0);
+  --bg-toggle: var(--clr-neutral-700); //--bg-toggle
+  --bg-toggle-hover: var(--clr-neutral-600); //--bg-toggle-hover
+  --box-shadow: none;
+  --box-shadow-button: var(--clr-neutral-0); //--box-shadow-button
+  --ag-header-background-color: var(--bg-toggle);
+  --ag-header-foreground-color: var(--on-primary-color);
+  --ag-header-cell-hover-background-color: #34495e;
+  --ag-header-cell-moving-background-color: #34495e;
+  --ag-background-color: var(--tertiary-color);
+
+  --mat-checkbox-label-text-color: var(--on-tertiary-color);
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #e6e6e6;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #949494;
+    border-radius: 4px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6b6b6b;
+  }
+
+  --mdc-filled-text-field-container-color: var(--gray-color);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+img {
+  max-width: 100%;
+  max-height: 100%;
+
+  &.fit {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+p {
+  margin-bottom: 0.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+span {
+  text-align: justify;
+}
+
+mat-icon.mat-icon {
+  width: auto;
+  height: auto;
+  font-size: 20px;
+}
+
+button.mdc-button {
+  border-radius: 0px;
+  @include mat.theme-overrides(
+    (
+      primary: var(--primary-color),
+      surface: var(--accent-color),
+    )
+  );
+}
+mat-form-field {
+  width: 100%;
+}
+
+.mdc-text-field--focused {
+  --mdc-filled-text-field-container-color: hsl(0deg 0% 69.46%);
+}
+/* custom classes */
+/* typography */
+
+@for $i from 3 through 6 {
+  .fs-#{$i}00 {
+    font-size: var(--fs-#{$i + "00"}) !important;
+  }
+}
+
+.fs-xl {
+  font-size: var(--fs-xl) !important;
+}
+
+/* for font weight */
+@for $i from 3 through 5 {
+  .fw-#{$i}00 {
+    font-weight: var(--fw-#{$i + "00"}) !important;
+  }
+}
+
+.fw-bold {
+  font-weight: var(--fw-bold) !important;
+}
+
+.flex-align {
+  display: flex;
+  align-items: center;
+}
+
+button {
+  --mat-fab-small-disabled-state-container-color: #edececba;
+  --mdc-fab-container-elevation-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  --mdc-extended-fab-container-elevation-shadow: rgba(14, 30, 37, 0.12) 0px 2px
+      4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  transition: color 0.1s;
+}
+
+button.transparent-btn {
+  color: var(--on-primary-color) !important;
+  &:hover {
+    color: var(--accent-color) !important;
+  }
+}
+
+button.primary {
+  background: var(--primary-color);
+  &:not(:disabled) {
+    color: var(--on-primary-color);
+  }
+}
+button.accent {
+  background-color: var(--accent-color);
+  &:not(:disabled) {
+    color: var(--on-accent-color);
+  }
+}
+button.tertiary {
+  background-color: var(--tertiary-color);
+  &:not(:disabled) {
+    color: var(--on-tertiary-color);
+  }
+}
+button.tertiary-light {
+  background-color: var(--tertiary-color-light);
+  &:not(:disabled) {
+    color: var(--on-tertiary-color);
+  }
+}
+
+mat-dialog-container {
+  @include mat.dialog-overrides(
+    (
+      container-color: var(--tertiary-color),
+      subhead-color: var(--on-tertiary-color),
+      supporting-text-color: var(--on-tertiary-color),
+    )
+  );
+}
+
+.dark_mode .mdc-text-field--filled.mdc-text-field--disabled {
+  --mdc-filled-text-field-disabled-container-color: #c7c7c7;
+}
+/* snackbar components bg overrides */
+.mat-mdc-snack-bar-container.success {
+  --mdc-snackbar-container-color: var(--success-color);
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+.mat-mdc-snack-bar-container.warning {
+  --mdc-snackbar-container-color: var(--warning-color);
+  --mdc-snackbar-supporting-text-color: white;
+}
+.mat-mdc-snack-bar-container.danger {
+  --mdc-snackbar-container-color: var(--danger-color);
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+/* backgrounds colors */
+.tertiary-bg {
+  background-color: var(--tertiary-color);
+}
+
+.gray-bg {
+  background-color: var(--clr-neutral-100);
+}
+
+.primary-bg {
+  background-color: var(--primary-color);
+}
+
+.accent-bg {
+  background-color: var(--accent-color);
+}
+
+/* /////////////// */
+.shadow {
+  box-shadow: 0px 0px 0.15rem var(--box-shadow);
+}
+.shadow-none {
+  box-shadow: none;
+}
+
+.basic-box {
+  /* display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2; */
+  background-color: var(--tertiary-color);
+  box-shadow: 0px 0px 0.15rem var(--box-shadow-button);
+  padding: 1.125em;
+}
+
+.radius-1 {
+  border-radius: 1rem;
+}
+
+.radius-btn {
+  border-radius: 100rem;
+}
+
+.scale {
+  transition: transform 0.1s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media screen and (min-width: 480px) {
+  //tablet
+  :root {
+    --fs-xl: 4rem;
+    --fs-600: 2.55rem;
+    --fs-500: 1rem;
+    --fs-400: 0.8rem;
+    --fs-300: 0.9rem;
+  }
+}
+
+@media screen and (min-width: 770px) {
+  //laptop
+  :root {
+    --fs-xl: 4rem;
+    --fs-600: 2.55rem;
+    --fs-500: 1.3rem;
+    --fs-425: 1.1rem;
+    --fs-400: 1rem;
+    --fs-300: 0.9rem;
+  }
+}

@@ -1,0 +1,31 @@
+<main>
+  <div class="flex-align justify-content-between mb-3">
+    <div class="flex-align gap-3 flex-grow-1">
+      <div class="flex-align gap-3">
+        <p class="fs-500">رقم العقار:</p>
+        <p class="fs-400 m-0">{{ realestateData?.farmNumber || "--" }}</p>
+       
+      </div>
+      <div class="flex-align gap-3">
+        <p class="fs-500">المالك:</p>
+        <button class="tertiary" mat-fab extended (click)="openUpsertFile()">
+          {{ realestateData?.owner?.fullName }}
+        </button>
+      </div>
+      <div class="flex-align gap-3">
+        <p class="fs-500">المشروع:</p>
+        <button class="tertiary" mat-fab extended (click)="openUpsertFile()">
+          {{ realestateData?.projectNumber || "--" }}
+        </button>
+      </div>
+    </div>
+    <button class="tertiary" mat-fab extended (click)="openUpsertFile()">
+      <mat-icon>add</mat-icon>
+      إضافة ملف
+    </button>
+  </div>
+  <ag-grid-angular
+    [rowData]="(filesList$ | async) || []"
+    [columnDefs]="colDefs"
+  />
+</main>

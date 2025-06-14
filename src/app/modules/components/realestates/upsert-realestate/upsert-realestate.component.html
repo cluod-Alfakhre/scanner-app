@@ -1,0 +1,132 @@
+@let selectInputsData = selectInputsData$| async;
+<h2 mat-dialog-title class="fs-500">
+  {{ data?.formData ? "تعديل" : "إضافة" }} مزرعة
+</h2>
+<form [formGroup]="realestateForm" (ngSubmit)="confirm()">
+  <mat-dialog-content class="custom-dialog">
+    <div class="flex-align gap-2 mb-3">
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">رقم المزرعة</p>
+        <mat-form-field>
+          <mat-label>أكتب رقم المزرعة هنا...</mat-label>
+          <input matInput formControlName="farmNumber" />
+        </mat-form-field>
+      </div>
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">مساحة المزرعة (هكتار)</p>
+        <mat-form-field>
+          <mat-label>أكتب مساحةالمزرعة هنا...</mat-label>
+          <input matInput formControlName="area" type="number" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="flex-align gap-2 mb-3">
+      <div class="field-wrapper flex-grow-1">
+        <div class="field-wrapper flex-grow-1">
+          <p class="field-title">المشروع التابعه له</p>
+          <mat-form-field>
+            <mat-label>اختر مشروع</mat-label>
+            <mat-select formControlName="projectId">
+              @for (project of selectInputsData?.projects; track $index) {
+              <mat-option [value]="project.id">{{ project.name }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="field-wrapper flex-grow-1">
+        <div class="field-wrapper flex-grow-1">
+          <p class="field-title">مالك المزرعة</p>
+          <mat-form-field>
+            <mat-label>اختر المالك</mat-label>
+            <mat-select formControlName="ownerId">
+              @for (owner of selectInputsData?.owners; track $index) {
+              <mat-option [value]="owner.id">{{ owner.fullName }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <p class="field-title my-2">حدود المزرعة</p>
+    <div class="flex-align gap-2 mb-3">
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">شمال</p>
+        <mat-form-field>
+          <mat-label>أكتب الحد الشمالي هنا...</mat-label>
+          <input matInput formControlName="north" />
+        </mat-form-field>
+      </div>
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">جنوب</p>
+        <mat-form-field>
+          <mat-label>أكتب الحد الجنوبي هنا...</mat-label>
+          <input matInput formControlName="south" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="flex-align gap-2 mb-3">
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">شرق</p>
+        <mat-form-field>
+          <mat-label>أكتب الحد الشرقي هنا...</mat-label>
+          <input matInput formControlName="east" />
+        </mat-form-field>
+      </div>
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">غرب</p>
+        <mat-form-field>
+          <mat-label>أكتب الحد الغربي هنا...</mat-label>
+          <input matInput formControlName="west" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="file-input-wrapper" *ngIf="!farmFiles && !data?.formData">
+      <p class="field-title">ملفات المزرعة</p>
+      <input
+        (change)="onFilesSelected($event)"
+        type="file"
+        id="pdfChange"
+        class="inputfile"
+        multiple
+      />
+      <label class="file-input-label" for="pdfChange">
+        <mat-icon fontIcon="upload"></mat-icon>
+        <p class="fs-400">قم برفع ملف</p>
+        <p class="fs-400">صيغة الملف: PDF</p>
+      </label>
+    </div>
+    <div class="file-input-wrapper" *ngIf="farmFiles && !data?.formData">
+      <p class="field-title">ملفات المزرعة</p>
+
+      <label class="file-input-label">
+        <mat-icon fontIcon="upload"></mat-icon>
+        <p class="fs-400">{{ joinFilesNames(farmFiles) }}</p>
+        <div class="flex-align gap-2">
+          <button
+            class="tertiary-light shadow"
+            mat-button
+            type="button"
+            (click)="cancelSelectedFiles()"
+          >
+            إلغاء التحديد
+          </button>
+        </div>
+      </label>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button
+      class="tertiary-light shadow"
+      mat-button
+      type="button"
+      (click)="close()"
+    >
+      إغلاق
+    </button>
+    <button class="accent" mat-button [disabled]="disableUpsertButton">
+      {{ data?.formData ? "تعديل" : "إضافة" }} مزرعة
+    </button>
+  </mat-dialog-actions>
+</form>

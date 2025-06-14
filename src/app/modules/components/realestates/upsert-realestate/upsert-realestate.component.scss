@@ -1,0 +1,24 @@
+.file-input-wrapper {
+  position: relative;
+
+  .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+  .file-input-label {
+    display: grid;
+    justify-items: center;
+    border-radius: 8px;
+    border: solid 1px var(--on-tertiary-color);
+    gap: 10px;
+    padding: 1rem;
+    cursor: pointer;
+    .icon {
+      font-size: 23px;
+    }
+  }
+}
