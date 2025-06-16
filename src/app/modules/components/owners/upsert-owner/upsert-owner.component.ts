@@ -134,7 +134,8 @@ export class UpsertOwnerComponent {
           if (this.attachFile.value) {
             this.openUpsertRealestate(res.id)
           }
-        }
+        },
+        error: () => this.disableUpsertButton = false
       })
   }
 
@@ -144,7 +145,8 @@ export class UpsertOwnerComponent {
         next: (res) => {
           this.toasterService.success('تم تعديل المالك بنجاح.')
           this.close(true)
-        }
+        },
+        error: () => this.disableUpsertButton = false
       })
   }
 
@@ -168,6 +170,8 @@ export class UpsertOwnerComponent {
       this.toasterService.markInvalidControls(this.ownerForm.controls)
       return
     }
+
+    this.disableUpsertButton = true
 
     if (this.data) {
       this.updateOwner(this.ownerForm.value)

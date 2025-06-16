@@ -1,1 +1,37 @@
-<p>files-tree works!</p>
+<main>
+  <div class="tree-wrapper d-grid gap-3">
+    @for (item of [2,2,2]; track $index) {
+    <div class="tree-item align-items-between d-grid py-3">
+      <div class="d-flex align-items-start gap-2">
+        <div class="icon" [class]="iconBgList[getBgIndex($index)]">
+          <mat-icon fontIcon="folder_open"></mat-icon>
+        </div>
+        <div class="info-wrapper">
+          <h3 class="fs-500">libya</h3>
+          <div class="d-flex gap-3">
+            <div class="d-flex gap-2">
+              <p class="fs-400 fw-bold">النوع:</p>
+              <p class="fs-400">مدينة</p>
+            </div>
+            ,
+            <div class="d-flex gap-2">
+              <p class="fs-400 fw-bold">عدد العناصر:</p>
+              <p class="fs-400">2</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex-align gap-2">
+        <button mat-button class="tertiary-light shadow">
+          <mat-icon  class="btn-icon" fontIcon="edit"></mat-icon>
+          Basic
+        </button>
+        <button mat-button class="tertiary-light shadow">
+          <mat-icon  class="btn-icon" fontIcon="edit"></mat-icon>
+          Basic
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</main>

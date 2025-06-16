@@ -54,7 +54,7 @@
     >
       إغلاق
     </button>
-    <button class="accent" mat-button>
+    <button class="accent" mat-button [disabled]="disableUpsertButton">
       {{ data ? "تعديل" : "إضافة" }} مالك
     </button>
   </mat-dialog-actions>

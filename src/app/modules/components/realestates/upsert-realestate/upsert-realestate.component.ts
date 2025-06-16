@@ -113,8 +113,6 @@ export class UpsertRealestateComponent {
         next: (res) => {
           this.toasterService.success('تم تعديل مزرعة بنجاح.')
           this.close(true)
-          console.log(this.farmFiles);
-
           if (this.farmFiles) {
             this.uploadFarmFiles([...this.farmFiles], realestateObject.id)
           }

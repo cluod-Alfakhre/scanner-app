@@ -1,10 +1,13 @@
 <main>
   <div class="flex-align justify-content-between mb-3">
     <div class="empty flex-grow-1"></div>
-    <button class="tertiary" mat-fab extended>
+    <button class="tertiary" mat-fab extended (click)="openUpsertUser()">
       <mat-icon>add</mat-icon>
       إضافة مستخدم
     </button>
   </div>
-  <ag-grid-angular [rowData]="rowData" [columnDefs]="colDefs" />
+  <ag-grid-angular
+    [rowData]="(usersList$ | async) || []"
+    [columnDefs]="colDefs"
+  />
 </main>

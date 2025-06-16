@@ -38,6 +38,8 @@
   --bg-toggle-hover: var(--clr-neutral-300); //--bg-toggle-hover
   --box-shadow: var(--clr-neutral-300); //--box-shadow
   --box-shadow-button: var(--clr-neutral-300); //--box-shadow-button
+  
+  --danger-color-light: var(--clr-red-500); //--bg-button
 
   --gray-color: var(--clr-neutral-300);
 
@@ -46,6 +48,12 @@
   --warning-color: #f2794c;
 
   --danger-color: #ee4848;
+
+  --purple-color-1: #cfbaf0;
+
+  --success-light-color: #bfd8bd;
+
+  --blue-color-1: #a3c4f3;
 
   //typography-phone
   --fs-xl: 3rem;
@@ -311,6 +319,12 @@ button.tertiary {
 }
 button.tertiary-light {
   background-color: var(--tertiary-color-light);
+  &:not(:disabled) {
+    color: var(--on-tertiary-color);
+  }
+}
+button.danger {
+  background-color: var(--danger-color-light);
   &:not(:disabled) {
     color: var(--on-tertiary-color);
   }

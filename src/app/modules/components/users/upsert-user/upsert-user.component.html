@@ -1,1 +1,83 @@
-<p>upsert-user works!</p>
+<h2 mat-dialog-title class="fs-500">{{ data ? "تعديل" : "إضافة" }} مستخدم</h2>
+<form [formGroup]="userForm" (ngSubmit)="confirm()">
+  <mat-dialog-content class="custom-dialog">
+    <div class="flex-align gap-2 mb-3">
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">الاسم الكامل</p>
+        <mat-form-field>
+          <mat-label>أكتب الاسم الكامل هنا...</mat-label>
+          <input matInput formControlName="fullName" />
+        </mat-form-field>
+      </div>
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">اسم المستخدم</p>
+        <mat-form-field>
+          <mat-label>أكتب اسم المستخدم هنا...</mat-label>
+          <input matInput formControlName="username" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="flex-align gap-2 mb-3">
+      <div class="field-wrapper flex-grow-1" style="flex-basis: 100%">
+        <p class="field-title">البريد الإلكتروني</p>
+        <mat-form-field>
+          <mat-label>أكتب البريد الإلكتروني هنا...</mat-label>
+          <input matInput formControlName="email" type="email" />
+        </mat-form-field>
+      </div>
+      <div class="field-wrapper flex-grow-1" style="flex-basis: 100%">
+        <p class="field-title">رقم الهاتف</p>
+        <mat-form-field>
+          <mat-label>أكتب رقم الهاتف هنا...</mat-label>
+          <input
+            matInput
+            formControlName="phone"
+            minlength="7"
+            maxlength="15"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="flex-align gap-2 mb-3">
+      <div
+        class="field-wrapper flex-grow-1"
+        style="flex-basis: 100%"
+        *ngIf="!data"
+      >
+        <p class="field-title">كلمة المرور</p>
+        <mat-form-field>
+          <mat-label>أكتب كلمة المرور هنا...</mat-label>
+          <input matInput formControlName="password" />
+        </mat-form-field>
+      </div>
+      <div class="field-wrapper flex-grow-1 mt-2" style="flex-basis: 100%">
+        <mat-checkbox formControlName="isActive"> تفعيل الحساب </mat-checkbox>
+      </div>
+    </div>
+    <div class="field-wrapper flex-grow-1">
+      <div class="field-wrapper flex-grow-1">
+        <p class="field-title">الوظيفة</p>
+        <mat-form-field>
+          <mat-label>اختر الوظيفة</mat-label>
+          <mat-select formControlName="roleId">
+            <mat-option [value]="1">مدير نظام</mat-option>
+            <mat-option [value]="2">موظف</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button
+      class="tertiary-light shadow"
+      mat-button
+      type="button"
+      (click)="close()"
+    >
+      إغلاق
+    </button>
+    <button class="accent" mat-button [disabled]="disableUpsertButton">
+      {{ data ? "تعديل" : "إضافة" }} مستخدم
+    </button>
+  </mat-dialog-actions>
+</form>

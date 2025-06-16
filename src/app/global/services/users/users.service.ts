@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CommonLogicService } from '../general/common-logic.service';
+import { AddUserModel, UpdateUserModel, UsersFilterModel } from '../../models/user.models';
 
 @Injectable({
   providedIn: 'root'
@@ -10,24 +11,24 @@ export class UsersService {
     private commonLogic: CommonLogicService,
   ) { }
 
-  getUsers(filterObject: any) {
-    const endPoint = `/api/Owners`;
+  getUsers(filterObject: UsersFilterModel) {
+    const endPoint = `/api/Users`;
     return this.commonLogic.getEndPoints(endPoint, filterObject)
   }
 
-  addUser(ownerObject: any) {
-    const endPoint = `/api/Owners`;
-    return this.commonLogic.addAndEditEndPoints(endPoint, ownerObject, 'post')
+  addUser(userObject: AddUserModel) {
+    const endPoint = `/api/Auth/register`;
+    return this.commonLogic.addAndEditEndPoints(endPoint, userObject, 'post')
   }
 
-  updateUser(ownerObject: any) {
-    const endPoint = `/api/Owners`;
-    return this.commonLogic.addAndEditEndPoints(endPoint, ownerObject, 'put')
+  updateUser(userObject: UpdateUserModel) {
+    const endPoint = `/api/Users/${userObject?.id}`;
+    return this.commonLogic.addAndEditEndPoints(endPoint, userObject, 'put')
   }
 
-  deleteUsers(ids: string[] | number[]) {
-    const endPoint = `/api/Owners`;
-    return this.commonLogic.deleteArrayEndPoints(endPoint, ids)
+  deleteUser(id: string | number) {
+    const endPoint = `/api/Users/${id}`;
+    return this.commonLogic.deleteEndPoints(endPoint)
   }
 
 }
