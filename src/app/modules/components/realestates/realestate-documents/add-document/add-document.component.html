@@ -1,0 +1,56 @@
+<mat-dialog-content class="custom-dialog">
+  <div class="file-input-wrapper" *ngIf="!farmFiles">
+    <p class="field-title">ملفات المزرعة</p>
+    <input
+      (change)="onFilesSelected($event)"
+      type="file"
+      id="pdfChange"
+      class="inputfile"
+      multiple
+    />
+    <label class="file-input-label" for="pdfChange">
+      <mat-icon fontIcon="upload"></mat-icon>
+      <p class="fs-400">قم برفع ملف</p>
+      <p class="fs-400">صيغة الملف: PDF</p>
+    </label>
+  </div>
+  <div class="file-input-wrapper" *ngIf="farmFiles">
+    <p class="field-title">ملفات المزرعة</p>
+
+    <label class="file-input-label">
+      <mat-icon fontIcon="upload"></mat-icon>
+      @for (item of farmFiles; track $index) {
+      <p class="fs-400">{{ item.name }}</p>
+      }
+      <div class="flex-align gap-2">
+        <button
+          class="tertiary-light shadow"
+          mat-button
+          type="button"
+          (click)="cancelSelectedFiles()"
+        >
+          إلغاء التحديد
+        </button>
+      </div>
+    </label>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    class="tertiary-light shadow"
+    mat-button
+    type="button"
+    (click)="close()"
+  >
+    إغلاق
+  </button>
+  <button
+    class="tertiary-light shadow"
+    mat-button
+    type="button"
+    [disabled]="disableConfirmBtn"
+    (click)="confirm()"
+  >
+    تأكيد
+  </button>
+</mat-dialog-actions>

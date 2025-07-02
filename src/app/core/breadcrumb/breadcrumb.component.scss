@@ -1,4 +1,15 @@
-h2.pos-absolute{
-    top: 0;
-    inset-inline-start: 0;
+h2.pos-absolute {
+  top: 0;
+  inset-inline-start: 0;
+}
+
+@media screen and (max-width: 770px) {
+  .page-title{
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .bread-crumb-text{
+    margin-top: 3rem !important;
+  }
 }

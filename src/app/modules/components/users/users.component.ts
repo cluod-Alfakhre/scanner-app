@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AgGridModule } from 'ag-grid-angular';
@@ -9,10 +9,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToasterService } from '../../../global/services/toaster.service';
 import { UpsertUserComponent } from './upsert-user/upsert-user.component';
 import { ConfirmBoxComponent } from '../../../global/shared/components/confirm-box/confirm-box.component';
-import { map, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, Subject } from 'rxjs';
 import { UserItemModel, UsersFilterModel } from '../../../global/models/user.models';
 import { contextMenuItem } from '../../../global/shared/components/context-menu/context-menu.component';
 import { GridMenuComponent } from '../../../global/shared/ag-grid/grid-menu/grid-menu.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-users',
@@ -21,6 +25,9 @@ import { GridMenuComponent } from '../../../global/shared/ag-grid/grid-menu/grid
     MatButtonModule,
     MatIconModule,
     CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
   ],
   providers: [DatePipe],
   templateUrl: './users.component.html',
@@ -47,10 +54,12 @@ export class UsersComponent {
     {
       field: "email",
       headerName: 'الإيميل',
+      cellRenderer: (params: any) => params.value || '--'
     },
     {
       field: "phone",
       headerName: 'رقم الهاتف',
+      cellRenderer: (params: any) => params.value || '--'
     },
     /* {
       field: "createdAt",
@@ -98,17 +107,28 @@ export class UsersComponent {
     PageSize: 25,
   };
 
+  private searchSubject = new Subject<string>();
+
   constructor(
     private dialogService: MatDialog,
     private usersService: UsersService,
     private datePipe: DatePipe,
     private toasterService: ToasterService,
+    private destroyRef: DestroyRef,
   ) {
-    this.getUsers(this.filterObject)
   }
 
   ngOnInit() {
     this.getUsers(this.filterObject)
+
+    this.searchSubject.pipe(
+      debounceTime(500), // Wait 300ms after last input
+      distinctUntilChanged(), // Only emit if value changed
+      takeUntilDestroyed(this.destroyRef) // Clean up on component destroy
+    ).subscribe(searchValue => {
+      this.getUsers(this.filterObject);
+    });
+
   }
 
   getUsers(filterObject: any) {
@@ -144,6 +164,10 @@ export class UsersComponent {
         this.getUsers(this.filterObject)
       })
     })
+  }
+
+  onSearchChange(searchValue: string) {
+    this.searchSubject.next(searchValue);
   }
 
 }

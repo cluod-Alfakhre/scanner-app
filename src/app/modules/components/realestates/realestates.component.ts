@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,12 +9,17 @@ import { RealestatesService } from '../../../global/services/realestates/realest
 import { RealestateItemModel, RealestatesFilterModel } from '../../../global/models/realestate.models';
 import { Observable } from 'rxjs/internal/Observable';
 import { CommonModule, DatePipe } from '@angular/common';
-import { map } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Subject } from 'rxjs';
 import { GridMenuComponent } from '../../../global/shared/ag-grid/grid-menu/grid-menu.component';
 import { contextMenuItem } from '../../../global/shared/components/context-menu/context-menu.component';
 import { ToasterService } from '../../../global/services/toaster.service';
 import { Router } from '@angular/router';
 import { ConfirmBoxComponent } from '../../../global/shared/components/confirm-box/confirm-box.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RealestatesFilterComponent } from './realestates-filter/realestates-filter.component';
 
 @Component({
   selector: 'app-realestates',
@@ -23,6 +28,9 @@ import { ConfirmBoxComponent } from '../../../global/shared/components/confirm-b
     MatButtonModule,
     MatIconModule,
     CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
   ],
   providers: [DatePipe],
   templateUrl: './realestates.component.html',
@@ -36,20 +44,24 @@ export class RealestatesComponent {
     SearchValue: '',
     Page: 1,
     PageSize: 25,
+    cityId: 0,
+    projectId: 0
   };
+
+  private searchSubject = new Subject<string>();
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
     {
       field: "farmNumber",
-      headerName: 'رقم العقار',
+      headerName: 'رقم مزرعة',
     },
     {
       field: "owner.fullName",
       headerName: 'اسم المالك',
     },
     {
-      field: "make",
+      field: "projectName",
       headerName: 'المشروع التابع له',
     },
     {
@@ -57,7 +69,7 @@ export class RealestatesComponent {
       headerName: 'رقم المشروع',
     },
     {
-      field: "make",
+      field: "cityName",
       headerName: 'المدينة التابع له',
     },
     {
@@ -66,7 +78,7 @@ export class RealestatesComponent {
     },
     {
       field: "area",
-      headerName: 'مساحة العقار',
+      headerName: 'مساحة المزرعة',
     },
     {
       field: "boundaries.north",
@@ -129,8 +141,19 @@ export class RealestatesComponent {
     private datePipe: DatePipe,
     private toasterService: ToasterService,
     private router: Router,
+    private destroyRef: DestroyRef,
   ) {
     this.getRealestates(this.filterObject)
+  }
+
+  ngOnInit() {
+    this.searchSubject.pipe(
+      debounceTime(500), // Wait 300ms after last input
+      distinctUntilChanged(), // Only emit if value changed
+      takeUntilDestroyed(this.destroyRef) // Clean up on component destroy
+    ).subscribe(searchValue => {
+      this.getRealestates(this.filterObject);
+    });
   }
 
   getRealestates(filterObject: any) {
@@ -162,7 +185,7 @@ export class RealestatesComponent {
   openRealestateDetails(realestateData: any = null) {
     this.realestatesService.realestateData.update(v => realestateData)
     localStorage.setItem('realestateData', JSON.stringify(realestateData))
-    this.router.navigate([`/home/realestates/realestate-details/`])
+    this.router.navigate([`/home/realestates/realestate-documents/`])
   }
 
   openUpsertRealestate(realestateData: any = null) {
@@ -177,5 +200,21 @@ export class RealestatesComponent {
       })
     })
   }
+
+  openFilterComponent() {
+    this.dialogService.open(RealestatesFilterComponent, {
+      data: this.filterObject
+    }).afterClosed().subscribe({
+      next: (res => {
+        if (!res) return
+        this.getRealestates(this.filterObject)
+      })
+    })
+  }
+
+  onSearchChange(searchValue: string) {
+    this.searchSubject.next(searchValue);
+  }
+
 
 }

@@ -1,6 +1,16 @@
 <main>
-  <div class="flex-align justify-content-between mb-3">
-    <div class="empty flex-grow-1"></div>
+  <div class="flex-align tb-flex-wrap justify-content-between mb-3">
+    <div class="empty flex-grow-1">
+      <mat-form-field class="example-full-width">
+        <mat-label>بحث باسم المدينة, رقم المدينة</mat-label>
+        <input
+          matInput
+          placeholder="اسم المدينة, رقم المدينة..."
+          [(ngModel)]="filterObject.SearchValue"
+          (ngModelChange)="onSearchChange($event)"
+        />
+      </mat-form-field>
+    </div>
     <button class="tertiary" mat-fab extended (click)="openUpsertCity()">
       <mat-icon>add</mat-icon>
       إضافة مدينة

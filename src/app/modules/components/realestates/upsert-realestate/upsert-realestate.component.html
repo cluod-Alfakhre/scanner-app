@@ -4,12 +4,18 @@
 </h2>
 <form [formGroup]="realestateForm" (ngSubmit)="confirm()">
   <mat-dialog-content class="custom-dialog">
-    <div class="flex-align gap-2 mb-3">
+    <div class="flex-align tb-flex-wrap gap-2 mb-3">
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">رقم المزرعة</p>
         <mat-form-field>
           <mat-label>أكتب رقم المزرعة هنا...</mat-label>
-          <input matInput formControlName="farmNumber" />
+          <input
+            matInput
+            formControlName="farmNumber"
+            type="number"
+            min="0"
+            max="9999"
+          />
         </mat-form-field>
       </div>
       <div class="field-wrapper flex-grow-1">
@@ -20,7 +26,7 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="flex-align gap-2 mb-3">
+    <div class="flex-align tb-flex-wrap gap-2 mb-3">
       <div class="field-wrapper flex-grow-1">
         <div class="field-wrapper flex-grow-1">
           <p class="field-title">المشروع التابعه له</p>
@@ -50,7 +56,7 @@
     </div>
     <mat-divider></mat-divider>
     <p class="field-title my-2">حدود المزرعة</p>
-    <div class="flex-align gap-2 mb-3">
+    <div class="flex-align tb-flex-wrap gap-2 mb-3">
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">شمال</p>
         <mat-form-field>
@@ -66,7 +72,7 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="flex-align gap-2 mb-3">
+    <div class="flex-align tb-flex-wrap gap-2 mb-3">
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">شرق</p>
         <mat-form-field>
@@ -102,7 +108,9 @@
 
       <label class="file-input-label">
         <mat-icon fontIcon="upload"></mat-icon>
-        <p class="fs-400">{{ joinFilesNames(farmFiles) }}</p>
+        @for (item of farmFiles; track $index) {
+        <p class="fs-400">{{ item.name }}</p>
+        }
         <div class="flex-align gap-2">
           <button
             class="tertiary-light shadow"

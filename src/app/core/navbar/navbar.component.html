@@ -9,16 +9,35 @@
       <mat-icon>dark_mode</mat-icon>
     </button>
     <button
-      class="tertiary-light"
+      class="tertiary-light tb-d-none"
       mat-fab
       aria-label="toggle the app theme"
       (click)="logout()"
     >
       <mat-icon>logout</mat-icon>
     </button>
+    <button
+      class="tertiary-light d-md-none"
+      id="nav_menu_btn"
+      mat-fab
+      aria-label="toggle the app theme"
+      (click)="doOpenNavMenu()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
   </div>
 
-  <ul class="links flex-align justify-content-center gap-2 flex-grow-1">
+  <div class="d-md-none flex-grow-1"></div>
+  <ul
+    class="links-wrapper flex-align justify-content-center gap-2 flex-grow-1"
+    [class.active]="openNavMenu"
+    (click)="openNavMenu = false"
+  >
+    <div class="d-flex d-md-none">
+      <button mat-button class="transparent-btn" (click)="openNavMenu = false">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <li>
       <a class="scale" routerLink="users" routerLinkActive="active">
         المستخدمين
@@ -47,6 +66,17 @@
         الملفات
       </a>
     </li>
+    <div class="px-2">
+      <button
+        class="tertiary-light d-md-none logout-btn px-2"
+        mat-fab
+        aria-label="toggle the app theme"
+        (click)="logout()"
+      >
+        <mat-icon>logout</mat-icon>
+        تسجيل خروج
+      </button>
+    </div>
   </ul>
 
   <div class="logo scale">

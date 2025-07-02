@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ColDef } from 'ag-grid-community';
-import { map, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, Subject } from 'rxjs';
 import { ProjectItemModel, ProjectsFilterModel } from '../../../global/models/project.model';
 import { UpsertProjectComponent } from './upsert-project/upsert-project.component';
 import { ProjectsService } from '../../../global/services/projects/projects.service';
@@ -13,6 +13,13 @@ import { contextMenuItem } from '../../../global/shared/components/context-menu/
 import { GridMenuComponent } from '../../../global/shared/ag-grid/grid-menu/grid-menu.component';
 import { ToasterService } from '../../../global/services/toaster.service';
 import { ConfirmBoxComponent } from '../../../global/shared/components/confirm-box/confirm-box.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatSelectModule } from '@angular/material/select';
+import { ListDataService } from '../../../global/services/list-data/list-data.service';
+import { CityItemModel } from '../../../global/models/city.models';
 
 @Component({
   selector: 'app-projects',
@@ -21,20 +28,26 @@ import { ConfirmBoxComponent } from '../../../global/shared/components/confirm-b
     MatButtonModule,
     MatIconModule,
     CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatSelectModule,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
 export class ProjectsComponent {
 
-
   projectsList$!: Observable<ProjectItemModel[]>;
 
   filterObject: ProjectsFilterModel = {
     SearchValue: '',
+    CityId: 0,
     Page: 1,
     PageSize: 25,
   };
+
+  private searchSubject = new Subject<string>();
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
@@ -86,18 +99,40 @@ export class ProjectsComponent {
     },
   ];
 
+  cities$!: Observable<CityItemModel[]>;
+
   constructor(
     private dialogService: MatDialog,
     private projectsService: ProjectsService,
+    private listsService: ListDataService,
     private toasterService: ToasterService,
+    private destroyRef: DestroyRef,
   ) {
-    this.getProject(this.filterObject)
+    this.getProjects(this.filterObject)
   }
 
-  getProject(filterObject: ProjectsFilterModel) {
+  ngOnInit() {
+    this.searchSubject.pipe(
+      debounceTime(500), // Wait 300ms after last input
+      distinctUntilChanged(), // Only emit if value changed
+      takeUntilDestroyed(this.destroyRef) // Clean up on component destroy
+    ).subscribe(searchValue => {
+      this.getProjects(this.filterObject);
+    });
+    this.getCities()
+  }
+
+  getProjects(filterObject: ProjectsFilterModel) {
     this.projectsList$ = this.projectsService.getProjects(filterObject).pipe(
       map((res: any) => res.data)
     )
+  }
+
+  getCities() {
+    this.cities$ = this.listsService.getCities({})
+      .pipe(
+        map((res) => res.data)
+      )
   }
 
   openConfirmDelete(projectId: string) {
@@ -115,7 +150,7 @@ export class ProjectsComponent {
       .subscribe({
         next: (res) => {
           this.toasterService.success('تم حذف مشروع بنجاح')
-          this.getProject(this.filterObject)
+          this.getProjects(this.filterObject)
         }
       })
   }
@@ -126,11 +161,13 @@ export class ProjectsComponent {
     }).afterClosed().subscribe({
       next: (res => {
         if (!res) return
-        this.getProject(this.filterObject)
+        this.getProjects(this.filterObject)
       })
     })
-
   }
 
+  onSearchChange(searchValue: string) {
+    this.searchSubject.next(searchValue);
+  }
 
 }

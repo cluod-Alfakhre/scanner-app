@@ -1,6 +1,28 @@
 <main>
-  <div class="flex-align justify-content-between mb-3">
-    <div class="empty flex-grow-1"></div>
+  <div class="flex-align tb-flex-wrap justify-content-between mb-3 flex-wrap">
+    <div class="empty flex-grow-1 d-flex flex-wrap gap-3">
+      <mat-form-field class="example-full-width">
+        <mat-label>بحث باسم المشروع, رقم المشروع </mat-label>
+        <input
+          matInput
+          placeholder="اسم المشروع, رقم المشروع..."
+          [(ngModel)]="filterObject.SearchValue"
+          (ngModelChange)="onSearchChange($event)"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>اختر مدينة</mat-label>
+        <mat-select
+          [(ngModel)]="filterObject.CityId"
+          (ngModelChange)="getProjects(filterObject)"
+        >
+          <mat-option [value]="0">اختر مدينة</mat-option>
+          @for (city of cities$ |async; track $index) {
+          <mat-option [value]="city.id">{{ city.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
     <button class="tertiary" mat-fab extended (click)="openUpsertProject()">
       <mat-icon>add</mat-icon>
       إضافة مشروع

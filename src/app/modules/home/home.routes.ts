@@ -3,13 +3,13 @@ import { Routes } from "@angular/router";
 export const homeRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'main',
+        redirectTo: 'files-tree',
         pathMatch: 'full',
     },
-    {
+    /* {
         path: 'main',
         loadComponent: () => import('../main/main.component').then(c => c.MainComponent),
-    },
+    }, */
     {
         path: 'users',
         loadComponent: () => import('../components/users/users.component').then(c => c.UsersComponent),
@@ -27,7 +27,7 @@ export const homeRoutes: Routes = [
     {
         path: 'realestates',
         data: {
-            pageTitle: 'العقارات',
+            pageTitle: 'المزارع',
         },
         children: [
             {
@@ -39,14 +39,21 @@ export const homeRoutes: Routes = [
                 path: 'main',
                 loadComponent: () => import('../components/realestates/realestates.component').then(c => c.RealestatesComponent),
                 data: {
-                    pageTitle: 'عرض-العقارات',
+                    pageTitle: 'عرض-المزارع',
                 },
             },
             {
                 path: 'realestate-details',
                 loadComponent: () => import('../components/realestates/realestate-details/realestate-details.component').then(c => c.RealestateDetailsComponent),
                 data: {
-                    pageTitle: 'تفاصيل العقار',
+                    pageTitle: 'تفاصيل المزرعة',
+                },
+            },
+            {
+                path: 'realestate-documents',
+                loadComponent: () => import('../components/realestates/realestate-documents/realestate-documents.component').then(c => c.RealestateDocumentsComponent),
+                data: {
+                    pageTitle: 'مستندات المزرعة',
                 },
             },
         ]

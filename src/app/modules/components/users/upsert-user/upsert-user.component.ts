@@ -39,7 +39,7 @@ export class UpsertUserComponent {
     fullName: new FormControl('', [Validators.required, Validators.minLength(3)]),
     username: new FormControl('', [Validators.required]),
     adress: new FormControl('s', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.email]),
     phone: new FormControl('', [PhoneNumberValidations]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     roleId: new FormControl(2, [Validators.required]),

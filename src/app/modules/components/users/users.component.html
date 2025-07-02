@@ -1,6 +1,16 @@
 <main>
-  <div class="flex-align justify-content-between mb-3">
-    <div class="empty flex-grow-1"></div>
+  <div class="flex-align tb-flex-wrap justify-content-between mb-3">
+    <div class="empty flex-grow-1">
+      <mat-form-field class="example-full-width">
+        <mat-label>بحث باسم المستخدم, الاسم الكامل </mat-label>
+        <input
+          matInput
+          placeholder="اسم المستخدم, الاسم الكامل..."
+          [(ngModel)]="filterObject.SearchValue"
+          (ngModelChange)="onSearchChange($event)"
+        />
+      </mat-form-field>
+    </div>
     <button class="tertiary" mat-fab extended (click)="openUpsertUser()">
       <mat-icon>add</mat-icon>
       إضافة مستخدم

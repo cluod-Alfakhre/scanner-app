@@ -1,0 +1,6 @@
+.custom-dialog-title{
+    line-height: 0 !important;
+    &::before{
+        height: 0 !important;
+    }
+}

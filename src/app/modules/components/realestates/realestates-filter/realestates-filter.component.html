@@ -1,0 +1,47 @@
+@let selectInputsData = selectInputsData$| async;
+
+<div mat-dialog-title class="custom-dialog-title">
+  <div class="d-flex align-items-center justify-content-between">
+    <h2 class="fs-500">فلترة المزارع</h2>
+    <button mat-button class="transparent-btn" (click)="close(false)">
+      <mat-icon class="m-0">close</mat-icon>
+    </button>
+  </div>
+</div>
+<mat-dialog-content class="custom-dialog">
+  <div class="field-wrapper flex-grow-1">
+    <p class="field-title">المدينة</p>
+    <mat-form-field>
+      <mat-label>اختر واحدة</mat-label>
+      <mat-select [(ngModel)]="data.cityId">
+        <mat-option [value]="0">اختر مدينة</mat-option>
+        @for (city of selectInputsData?.cities; track $index) {
+        <mat-option [value]="city.id">{{ city.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="field-wrapper flex-grow-1">
+    <p class="field-title">المشروع</p>
+    <mat-form-field>
+      <mat-label>اختر واحدة</mat-label>
+      <mat-select [(ngModel)]="data.projectId">
+        <mat-option [value]="0">اختر المشروع</mat-option>
+        @for (project of selectInputsData?.projects; track $index) {
+        <mat-option [value]="project.id">{{ project.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    class="tertiary-light shadow"
+    mat-button
+    type="button"
+    (click)="cancelFiltering()"
+  >
+    إلغاء الفلترة
+  </button>
+  <button class="accent" mat-button (click)="close(true)">فلترة</button>
+</mat-dialog-actions>

@@ -14,6 +14,7 @@ export interface ProjectItemModel {
 
 export interface ProjectsFilterModel extends PaginationModel {
     SearchValue?: string;
+    CityId?: number;
 }
 
 export interface AddProjectModel {

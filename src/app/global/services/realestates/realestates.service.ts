@@ -22,6 +22,11 @@ export class RealestatesService {
     }
   }
 
+  getFilesTree() {
+    const endPoint = `/api/FarmDocuments/tree`;
+    return this.commonLogic.getEndPoints(endPoint)
+  }
+
   getRealestates(filterObject: RealestatesFilterModel) {
     const endPoint = `/api/Farms`;
     return this.commonLogic.getEndPoints(endPoint, filterObject)
@@ -31,13 +36,12 @@ export class RealestatesService {
     const endPoint = `/api/FarmDocuments/${farmId}`;
     return this.commonLogic.getEndPoints(endPoint)
   }
+
   getDocument(documentId: string | number) {
-    const endPoint = `/api/FarmDocuments/download/${documentId}`;
+    const endPoint = `/api/FarmDocuments/preview/${documentId}`;
     return this.commonLogic.getEndPointsWithOptions(endPoint, {
-      observe: 'response' as 'body',
-      Accept: 'application/pdf',
-      responseType: 'blob' as 'blob',
-      params: null,
+      responseType: 'blob',
+      Accept: '*/*',
     })
   }
 
@@ -52,8 +56,10 @@ export class RealestatesService {
   }
 
   addRealestate(realestateObject: AddRealestateModel) {
+    console.log(realestateObject);
+    
     const endPoint = `/api/Farms`;
-    return this.commonLogic.addAndEditEndPoints(endPoint, realestateObject, 'post')
+    return this.commonLogic.addAndEditEndPointsWithFormData(endPoint, realestateObject, 'post')
   }
 
   updateRealestate(realestateObject: UpdateRealestateModel) {
@@ -64,6 +70,11 @@ export class RealestatesService {
   deleteRealestate(ids: string[] | number[]) {
     const endPoint = `/api/Farms`;
     return this.commonLogic.deleteArrayEndPoints(endPoint, ids)
+  }
+
+  getRealestateBranches(farmId: string | number) {
+    const endPoint = `/api/FarmBranches/farm/${farmId}`;
+    return this.commonLogic.getEndPoints(endPoint)
   }
 
 }

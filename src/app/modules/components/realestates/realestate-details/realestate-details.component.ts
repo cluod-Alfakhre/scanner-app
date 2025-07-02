@@ -5,14 +5,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { AgGridModule } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
-import { map, Observable } from 'rxjs';
+import { RealestateItemModel } from '../../../../global/models/realestate.models';
+import { RealestatesService } from '../../../../global/services/realestates/realestates.service';
 import { ToasterService } from '../../../../global/services/toaster.service';
 import { GridMenuComponent } from '../../../../global/shared/ag-grid/grid-menu/grid-menu.component';
 import { contextMenuItem } from '../../../../global/shared/components/context-menu/context-menu.component';
-import { RealestatesService } from '../../../../global/services/realestates/realestates.service';
-import { RealestateItemModel } from '../../../../global/models/realestate.models';
 import { ConfirmBoxComponent } from '../../../../global/shared/components/confirm-box/confirm-box.component';
-import { DocumentPreviewComponent } from './document-preview/document-preview.component';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-realestate-details',
@@ -30,23 +30,53 @@ import { DocumentPreviewComponent } from './document-preview/document-preview.co
 })
 export class RealestateDetailsComponent {
 
-  filesList$!: Observable<any[]>;
-
   colDefs: ColDef[] = [
     {
-      field: "fileName",
-      headerName: 'اسم الملف',
+      field: "name",
+      headerName: 'اسم الفرع',
     },
     {
-      field: "uploadedAt",
+      field: "owner.fullName",
+      headerName: 'اسم المالك',
+    },
+    /* {
+      field: "projectName",
+      headerName: 'المشروع التابع له',
+    },
+    {
+      field: "projectNumber",
+      headerName: 'رقم المشروع',
+    },
+    {
+      field: "cityName",
+      headerName: 'المدينة التابع له',
+    },
+    {
+      field: "cityNumber",
+      headerName: 'رقم المدينة',
+    }, */
+    {
+      field: "area",
+      headerName: 'مساحة المزرعة',
+    },
+    {
+      field: "boundaries.north",
+      headerName: 'الحدود',
+    },
+    {
+      field: "createdAt",
       headerName: 'تاريخ الإضافة',
       cellDataType: 'date',
       cellRenderer: (params: any) => {
         return `${this.datePipe.transform(params.value, 'yyyy-MM-dd')}`
       }
     },
+    /* {
+      field: "electric",
+      headerName: 'تاريخ التعديل',
+    }, */
     {
-      headerName: '',
+      headerName: 'خيارات',
       flex: 1,
       minWidth: 100,
       cellStyle: {
@@ -56,10 +86,17 @@ export class RealestateDetailsComponent {
       cellRendererParams: (params: any) => {
         const itemsMenu: contextMenuItem[] = [
           {
-            label: 'عرض',
+            label: 'عرض المستندات',
             icon: 'visibility',
             onClick: () => {
-              this.getFileData(params.data.id)
+              this.openBranchDocuments(params.data)
+            }
+          },
+          {
+            label: 'تعديل',
+            icon: 'edit',
+            onClick: () => {
+              this.openUpsertBranch(params.data)
             }
           },
           {
@@ -79,93 +116,45 @@ export class RealestateDetailsComponent {
 
   realestateData!: RealestateItemModel | null;
 
+  branchesList$!: Observable<any>;
+
   constructor(
     private dialogService: MatDialog,
     private datePipe: DatePipe,
     private toasterService: ToasterService,
-    private realestateService: RealestatesService,
+    private realestatesService: RealestatesService,
+    private router: Router,
   ) {
     effect(() => {
-      this.realestateData = realestateService.realestateData()
+      this.realestateData = realestatesService.realestateData()
       if (this.realestateData) {
-        this.getRealestateFiles(this.realestateData.id)
+        this.getRealestateBranches(this.realestateData.id)
       }
     })
   }
 
-  ngOnInit() {
+  getRealestateBranches(farmId: number | string) {
 
   }
 
-  getRealestateFiles(farmId: string | number) {
-    this.filesList$ = this.realestateService.getRealestateFiles(farmId)
-      .pipe(
-        map((res) => {
-          return res;
-        })
-      )
-  }
-
-  openUpsertFile() {
+  openUpsertBranch(branchData: any = null) {
 
   }
+  
 
-  getFileData(documentId: string | number) {
-    this.realestateService.getDocument(documentId)
-      .subscribe({
-        next: (res: any) => {
-          console.log(res.body);
-          
-          this.convertBinary(res.body)
-        }
-      })
-  }
-
-  convertBinary(base64Data: string) {
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: 'application/pdf' });
-    const blobUrl = URL.createObjectURL(blob);
-    window.open(blobUrl, '_blank')
-
-    return blobUrl
-  }
-
-  openDocumentPreview(documentId: string) {
-    this.dialogService.open(DocumentPreviewComponent, {
-      width: '100%',
-      height: '500px',
-      maxWidth: 'none'
-    })
-      .afterClosed().subscribe({
-        next: (res: any) => {
-          if (!res) return;
-        }
-      })
-  }
-
-  openConfirmDelete(documentId: string) {
+  openConfirmDelete(branchId: string) {
     this.dialogService.open(ConfirmBoxComponent)
       .afterClosed().subscribe({
         next: (res: any) => {
           if (!res) return;
-          this.deleteRealestateFile(documentId)
         }
       })
   }
 
-  deleteRealestateFile(documentId: string | number) {
-    this.realestateService.deleteRealestateFile(documentId)
-      .subscribe({
-        next: (res: any) => {
-          if (!res) return;
-          this.toasterService.success('')
-          if (this.realestateData) {
-            this.getRealestateFiles(this.realestateData.id)
-          }
-        }
-      })
+  openBranchDocuments(branchData: any = null) {
+    this.realestatesService.realestateData.update(v => branchData)
+    localStorage.setItem('realestateData', JSON.stringify(branchData))
+    this.router.navigate([`/home/realestates/realestate-documents/`])
   }
 
 }

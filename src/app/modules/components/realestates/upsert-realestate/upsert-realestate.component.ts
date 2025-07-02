@@ -42,10 +42,10 @@ export class UpsertRealestateComponent {
 
   realestateForm: FormGroup<any> = new FormGroup({
     id: new FormControl('', [Validators.min(0)]),
-    farmNumber: new FormControl('', [Validators.required, Validators.min(1)]),
+    farmNumber: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(9999)]),
     area: new FormControl('', [Validators.required, Validators.min(0)]),
     projectId: new FormControl('', [Validators.required, Validators.min(0)]),
-    ownerId: new FormControl('', [Validators.required, Validators.min(0)]),
+    ownerId: new FormControl('', [Validators.min(0)]),
     north: new FormControl('', [Validators.minLength(3)]),
     south: new FormControl('', [Validators.minLength(3)]),
     east: new FormControl('', [Validators.minLength(3)]),
@@ -67,6 +67,8 @@ export class UpsertRealestateComponent {
   ) { }
 
   ngOnInit() {
+    console.log(this.data.formData);
+
     if (this.data?.formData) {
       this.realestateForm.get('id')?.addValidators(Validators.required)
       this.realestateForm.patchValue({
@@ -139,13 +141,13 @@ export class UpsertRealestateComponent {
     // Append each file to the FormData object
     files.forEach((file, index) => {
       console.log(file);
-      
+
       formData.append(`files`, file, file.name);
     });
 
     // Add any additional data if needed
     console.log(farmId);
-    
+
     formData.append('farmId', farmId + '');
 
     this.realestatesService.uploadFarmFiles(formData)
@@ -161,6 +163,10 @@ export class UpsertRealestateComponent {
 
   }
 
+  padToFourDigits(num: number) {
+    return num.toString().padStart(4, '0');
+  }
+
   confirm() {
     if (this.realestateForm.invalid || this.disableUpsertButton) {
       this.toasterService.markInvalidControls(this.realestateForm.controls)
@@ -168,12 +174,14 @@ export class UpsertRealestateComponent {
     }
 
     this.disableUpsertButton = true;
+    const realestateData = this.realestateForm.getRawValue()
+    realestateData.farmNumber = this.padToFourDigits(realestateData.farmNumber)
 
     if (this.data?.formData) {
-      this.updateRealestate(this.realestateForm.getRawValue())
+      this.updateRealestate(realestateData)
     }
     else {
-      this.addRealestate(this.realestateForm.getRawValue())
+      this.addRealestate(realestateData)
     }
   }
 

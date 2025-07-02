@@ -7,6 +7,7 @@ import { ProjectsService } from '../projects/projects.service';
 import { ProjectsFilterModel } from '../../models/project.model';
 import { RealestatesFilterModel } from '../../models/realestate.models';
 import { OwnersFilterModel } from '../../models/owner.models';
+import { CommonLogicService } from '../general/common-logic.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class ListDataService {
     private ownersService: OwnersService,
     private realestatesService: RealestatesService,
     private projectsService: ProjectsService,
+    private commonLogic: CommonLogicService,
   ) { }
 
   getCities(filterObject: CitiesFilterModel) {
@@ -38,6 +40,11 @@ export class ListDataService {
   getOwners(filterObject: OwnersFilterModel) {
     filterObject.SkipPaged = true;
     return this.ownersService.getOwners(filterObject);
+  }
+
+  getRealestateBranchNames() {
+    const endPoint = `/api/Enum/branch-names`;
+    return this.commonLogic.getEndPoints(endPoint)
   }
 
 }

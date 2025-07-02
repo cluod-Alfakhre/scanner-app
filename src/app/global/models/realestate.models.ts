@@ -23,6 +23,8 @@ export interface RealestateItemModel {
 
 export interface RealestatesFilterModel extends PaginationModel {
     SearchValue: string;
+    cityId: number;
+    projectId: number;
 }
 
 export interface AddRealestateModel {

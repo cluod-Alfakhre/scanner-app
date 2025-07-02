@@ -1,9 +1,29 @@
 <main>
-  <div class="flex-align justify-content-between mb-3">
-    <div class="empty flex-grow-1"></div>
+  <div class="flex-align tb-flex-wrap justify-content-between mb-3">
+    <div class="flex-grow-1">
+      <div class="input-btn">
+        <mat-form-field class="example-full-width">
+          <mat-label>رقم المزرعة, اسم المالك, الرقم الوطني</mat-label>
+          <input
+            matInput
+            placeholder="بحث..."
+            [(ngModel)]="filterObject.SearchValue"
+            (ngModelChange)="onSearchChange($event)"
+          />
+        </mat-form-field>
+        <button
+          class="tertiary"
+          mat-fab
+          extended
+          (click)="openFilterComponent()"
+        >
+          <mat-icon class="m-0">tune</mat-icon>
+        </button>
+      </div>
+    </div>
     <button class="tertiary" mat-fab extended (click)="openUpsertRealestate()">
       <mat-icon>add</mat-icon>
-      إضافة عقار
+      إضافة مزرعة
     </button>
   </div>
   <ag-grid-angular
