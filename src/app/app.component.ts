@@ -5,6 +5,9 @@ import { AppAgGridModule } from './global/ag-grid/ag-grid.module';
 import { ConfigsService } from './global/services/general/configs.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { LoadingSpinnerComponent } from './core/loading-spinner/loading-spinner.component';
+import { LoadingService } from './global/services/loading-service.service';
+import { Observable } from 'rxjs';
 
 const intializeAppFn = () => {
   const configService = inject(ConfigsService);
@@ -19,13 +22,26 @@ const intializeAppFn = () => {
     NgbModule,
     AppAgGridModule,
     CommonModule,
+    LoadingSpinnerComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
 
-  constructor(private modalService: NgbModal) {
+  loading$!: Observable<any>;
+
+  constructor(
+    private modalService: NgbModal,
+    private loadingService: LoadingService
+  ) {
+
+
+  }
+
+  ngOnInit() {
+    this.loading$ = this.loadingService.loading$;
+    console.log(this.loading$.subscribe((res) => console.log(res)));
   }
 
   public open(modal: any): void {

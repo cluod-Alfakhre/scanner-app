@@ -6,10 +6,13 @@ export const homeRoutes: Routes = [
         redirectTo: 'files-tree',
         pathMatch: 'full',
     },
-    /* {
-        path: 'main',
+    {
+        path: 'user-profile',
         loadComponent: () => import('../main/main.component').then(c => c.MainComponent),
-    }, */
+        data: {
+            pageTitle: 'ملف المستخدم',
+        },
+    },
     {
         path: 'users',
         loadComponent: () => import('../components/users/users.component').then(c => c.UsersComponent),

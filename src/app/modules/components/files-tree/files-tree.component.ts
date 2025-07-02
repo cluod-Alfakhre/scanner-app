@@ -66,6 +66,12 @@ export class FilesTreeComponent {
         map((res) => {
           this.currentList = res;
           this.listRecovery = res;
+          this.nameProperty = 'name';
+          this.innerListProperty = 'projects';
+          this.itemType = 'مدينة';
+          this.currentTitle = 'مدن';
+          this.currentIcon = 'folder_open';
+          this.breadCrumbNames = []
           return res
         })
       );
@@ -77,7 +83,7 @@ export class FilesTreeComponent {
     }
     this.currentItem = currentItem;
     if (currentItem?.projects) {
-      this.breadCrumbNames.push(currentItem.cityName)
+      this.breadCrumbNames.push('. /' + currentItem.name)
       this.currentList = currentItem?.projects;
       this.currentProjectsList = currentItem?.projects;
       //this.nameProperty = 'name';
@@ -87,7 +93,7 @@ export class FilesTreeComponent {
       this.currentIcon = 'list_alt';
     }
     else if (currentItem?.farms) {
-      this.breadCrumbNames.push(currentItem.projectName)
+      this.breadCrumbNames.push(currentItem.name)
       this.currentList = currentItem?.farms;
       this.currentFarmsList = currentItem?.farms;
       this.nameProperty = 'farmNumber';
@@ -97,7 +103,7 @@ export class FilesTreeComponent {
       this.currentIcon = 'gite';
     }
     else if (currentItem?.documents) {
-      this.breadCrumbNames.push(currentItem.farmName)
+      this.breadCrumbNames.push(currentItem.farmNumber)
       this.currentList = currentItem?.documents;
       this.nameProperty = 'fileName';
       this.innerListProperty = '';
@@ -238,7 +244,7 @@ export class FilesTreeComponent {
   openUpsertRealestate(realestateData: any = null) {
     this.dialogService.open(UpsertRealestateComponent, {
       data: {
-        formData: realestateData,
+        formData: { ...realestateData, owner: { id: realestateData.ownerId } },
       },
     }).afterClosed().subscribe({
       next: (res => {

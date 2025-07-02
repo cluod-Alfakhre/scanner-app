@@ -66,7 +66,16 @@
         الملفات
       </a>
     </li>
-    <div class="px-2">
+    <div class="px-2 d-grid">
+      <button
+        class="tertiary-light d-md-none logout-btn mb-3 px-2"
+        mat-fab
+        aria-label="toggle the app theme"
+        (click)="goToProfile()"
+      >
+        <mat-icon>account_circle</mat-icon>
+        ملف المستخدم
+      </button>
       <button
         class="tertiary-light d-md-none logout-btn px-2"
         mat-fab

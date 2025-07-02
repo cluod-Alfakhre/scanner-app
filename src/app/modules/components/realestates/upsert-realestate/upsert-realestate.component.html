@@ -7,7 +7,7 @@
     <div class="flex-align tb-flex-wrap gap-2 mb-3">
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">رقم المزرعة</p>
-        <mat-form-field>
+        <mat-form-field class="tb-w-100">
           <mat-label>أكتب رقم المزرعة هنا...</mat-label>
           <input
             matInput
@@ -20,7 +20,7 @@
       </div>
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">مساحة المزرعة (هكتار)</p>
-        <mat-form-field>
+        <mat-form-field class="tb-w-100">
           <mat-label>أكتب مساحةالمزرعة هنا...</mat-label>
           <input matInput formControlName="area" type="number" />
         </mat-form-field>
@@ -30,7 +30,7 @@
       <div class="field-wrapper flex-grow-1">
         <div class="field-wrapper flex-grow-1">
           <p class="field-title">المشروع التابعه له</p>
-          <mat-form-field>
+          <mat-form-field class="tb-w-100">
             <mat-label>اختر مشروع</mat-label>
             <mat-select formControlName="projectId">
               @for (project of selectInputsData?.projects; track $index) {
@@ -43,7 +43,7 @@
       <div class="field-wrapper flex-grow-1">
         <div class="field-wrapper flex-grow-1">
           <p class="field-title">مالك المزرعة</p>
-          <mat-form-field>
+          <mat-form-field class="tb-w-100">
             <mat-label>اختر المالك</mat-label>
             <mat-select formControlName="ownerId">
               @for (owner of selectInputsData?.owners; track $index) {
@@ -59,14 +59,14 @@
     <div class="flex-align tb-flex-wrap gap-2 mb-3">
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">شمال</p>
-        <mat-form-field>
+        <mat-form-field class="tb-w-100">
           <mat-label>أكتب الحد الشمالي هنا...</mat-label>
           <input matInput formControlName="north" />
         </mat-form-field>
       </div>
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">جنوب</p>
-        <mat-form-field>
+        <mat-form-field class="tb-w-100">
           <mat-label>أكتب الحد الجنوبي هنا...</mat-label>
           <input matInput formControlName="south" />
         </mat-form-field>
@@ -75,14 +75,14 @@
     <div class="flex-align tb-flex-wrap gap-2 mb-3">
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">شرق</p>
-        <mat-form-field>
+        <mat-form-field class="tb-w-100">
           <mat-label>أكتب الحد الشرقي هنا...</mat-label>
           <input matInput formControlName="east" />
         </mat-form-field>
       </div>
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">غرب</p>
-        <mat-form-field>
+        <mat-form-field class="tb-w-100">
           <mat-label>أكتب الحد الغربي هنا...</mat-label>
           <input matInput formControlName="west" />
         </mat-form-field>

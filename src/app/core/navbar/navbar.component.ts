@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
@@ -25,11 +25,14 @@ export class NavbarComponent {
     private toggleThemModeServie: ToggleThemeModeService,
     private authService: AuthService,
     private elementRef: ElementRef<HTMLElement>,
+    private router: Router,
   ) { }
 
 
   @HostListener('document:click', ['$event.target'])
   onClick(target: any) {
+    console.log('clicked');
+    
     const clickedInside = this.elementRef.nativeElement.querySelector('.links-wrapper')?.contains(target);
     const clickedInsideBtn = this.elementRef.nativeElement.querySelector('#nav_menu_btn')?.contains(target);
     if (!clickedInside && !clickedInsideBtn && this.openNavMenu) {
@@ -39,6 +42,10 @@ export class NavbarComponent {
 
   toggleTheme() {
     this.toggleThemModeServie.toggleDarkMode()
+  }
+
+  goToProfile() {
+    this.router.navigate(['/home/user-profile'])
   }
 
   logout() {

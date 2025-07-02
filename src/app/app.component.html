@@ -1,3 +1,8 @@
+@let loading = loading$ | async;
+<!-- // -->
+@if ( loading ) {
+<app-loading-spinner [visible]="loading"></app-loading-spinner>
+}
 <router-outlet></router-outlet>
 
 <!-- <div class="container-fluid py-3">

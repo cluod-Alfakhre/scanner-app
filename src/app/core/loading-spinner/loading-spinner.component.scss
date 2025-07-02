@@ -1,0 +1,29 @@
+.loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--accent-color) 30%,
+    hsl(30, 100%, 50%) 100%
+  );
+  z-index: 9999;
+  animation: loading-bar-animation 1s linear infinite;
+}
+
+@keyframes loading-bar-animation {
+  0% {
+    left: -100vw;
+    width: 100vw;
+  }
+  50% {
+    left: 0;
+    width: 100vw;
+  }
+  100% {
+    left: 100vw;
+    width: 10vw;
+  }
+}
