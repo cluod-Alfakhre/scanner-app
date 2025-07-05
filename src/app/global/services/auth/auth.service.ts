@@ -32,6 +32,19 @@ export class AuthService {
     return this.commonLogic.addAndEditEndPoints(endPoint, { username, password }, 'post')
   }
 
+  getUserData() {
+    return JSON.parse(localStorage.getItem('userData')!)
+  }
+
+  getOrganizationData() {
+    const endPoint = `/api/OrganizationInfo`
+    return this.commonLogic.getEndPoints(endPoint)
+  }
+
+  updateOrganizationData(organizationData: any) {
+    const endPoint = `/api/OrganizationInfo`
+    return this.commonLogic.addAndEditEndPointsWithFormData(endPoint, organizationData, 'put')
+  }
 
   logout() {
     localStorage.clear()

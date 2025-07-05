@@ -42,7 +42,7 @@ export class UpsertRealestateComponent {
 
   realestateForm: FormGroup<any> = new FormGroup({
     id: new FormControl('', [Validators.min(0)]),
-    farmNumber: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(9999)]),
+    farmNumber: new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(4)]),
     area: new FormControl('', [Validators.required, Validators.min(0)]),
     projectId: new FormControl('', [Validators.required, Validators.min(0)]),
     ownerId: new FormControl('', [Validators.min(0)]),

@@ -26,6 +26,7 @@ export type contextMenuItem = {
 })
 export class ContextMenuComponent {
 
+  @Input() btnClass: string = 'tertiary';
   @Input() btnLable: string = '';
   @Input() btnIcon: string = 'more_horiz';
 

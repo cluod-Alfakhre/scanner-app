@@ -1,6 +1,26 @@
-<main class="flex-align pos-relative px-3 gap-2 mb-5">
-  <h2 class="page-title fs-600 pos-absolute">{{ pageTitle || "الرئيسية" }}</h2>
-  <p class="bread-crumb-text flex-grow-1 fs-500 text-center mt-2 m-0">
-    {{ currentRoutesTitles.join("/") }}
+<main class="flex-align tb-flex-wrap pos-relative px-3 gap-2 mb-5">
+  <h2 class="page-title fs-600 m-0">
+    {{ pageTitle || "الرئيسية" }}
+  </h2>
+  <p class="bread-crumb-text flex-grow-1 fs-400 text-center mt-2 m-0">
+    <!-- {{ currentRoutes.join("/") }} -->
+    <a
+      class="crumb-route"
+      *ngFor="let item of currentRoutes; let isLast = last"
+      [routerLink]="[item.pageRoute]"
+      routerLinkActive="active"
+      routerLinkActive="router-link-active"
+    >
+      {{ item?.pageTitle }} <span *ngIf="!isLast">/</span>
+    </a>
   </p>
+  <button
+    class="tertiary-light"
+    mat-fab
+    aria-label="toggle the app theme"
+    [matTooltip]="'رجوع'"
+    (click)="getBack()"
+  >
+    <mat-icon>reply</mat-icon>
+  </button>
 </main>

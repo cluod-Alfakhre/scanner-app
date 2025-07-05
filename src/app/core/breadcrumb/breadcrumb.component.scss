@@ -3,13 +3,34 @@ h2.pos-absolute {
   inset-inline-start: 0;
 }
 
+.crumb-route {
+  cursor: pointer;
+  user-select: none;
+  &:hover,
+  &.active {
+    color: var(--accent-color);
+  }
+}
+
+.bread-crumb-text {
+  padding-left: 100px;
+}
+
 @media screen and (max-width: 770px) {
-  .page-title{
+  /* .page-title {
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    white-space: nowrap;
   }
-  .bread-crumb-text{
-    margin-top: 3rem !important;
+  .bread-crumb-text {
+    margin-top: 4rem !important;
+  } */
+}
+@media screen and (max-width: 480px) {
+  .page-title {
+    flex-grow: 1;
+    flex-basis: 100%;
+    text-align: center;
   }
 }

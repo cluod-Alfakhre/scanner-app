@@ -1,7 +1,7 @@
 <main>
   <div class="flex-align tb-flex-wrap justify-content-between mb-3 flex-wrap">
     <div class="empty flex-grow-1 d-flex flex-wrap gap-3">
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="ph-w-100">
         <mat-label>بحث باسم المشروع, رقم المشروع </mat-label>
         <input
           matInput
@@ -10,7 +10,7 @@
           (ngModelChange)="onSearchChange($event)"
         />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class="ph-w-100">
         <mat-label>اختر مدينة</mat-label>
         <mat-select
           [(ngModel)]="filterObject.CityId"

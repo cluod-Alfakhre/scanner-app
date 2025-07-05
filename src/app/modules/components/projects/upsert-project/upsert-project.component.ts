@@ -39,8 +39,8 @@ export class UpsertProjectComponent {
 
   projectForm: FormGroup<any> = new FormGroup({
     id: new FormControl('', [Validators.min(0)]),
-    name: new FormControl('', [Validators.required, Validators.min(3)]),
-    projectNumber: new FormControl('', [Validators.required, Validators.pattern(/^[1-9][0-9]?$/)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    projectNumber: new FormControl('', [Validators.required, Validators.min(0), Validators.max(99)]),
     cityId: new FormControl('', [Validators.required, Validators.min(0)]),
   })
 
@@ -91,6 +91,10 @@ export class UpsertProjectComponent {
       })
   }
 
+  padToFourDigits(num: number) {
+    return num.toString().padStart(2, '0');
+  }
+
   confirm() {
     if (this.projectForm.invalid || this.disableUpsertButton) {
       this.toasterService.markInvalidControls(this.projectForm.controls)
@@ -98,11 +102,15 @@ export class UpsertProjectComponent {
     }
 
     this.projectForm.value.projectNumber = this.projectForm.value.projectNumber.toString()
+
+    const projectData = this.projectForm.getRawValue()
+    projectData.projectNumber = this.padToFourDigits(projectData.projectNumber)
+
     if (this.data) {
-      this.updateProject(this.projectForm.value)
+      this.updateProject(projectData)
     }
     else {
-      this.addProject(this.projectForm.value)
+      this.addProject(projectData)
     }
   }
 

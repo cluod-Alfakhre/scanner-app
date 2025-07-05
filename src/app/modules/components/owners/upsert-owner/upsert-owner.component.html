@@ -1,17 +1,17 @@
 <h2 mat-dialog-title class="fs-500">{{ data ? "تعديل" : "إضافة" }} مالك</h2>
 <form [formGroup]="ownerForm" (ngSubmit)="confirm()">
   <mat-dialog-content class="custom-dialog">
-    <div class="flex-align gap-2 mb-3">
+    <div class="flex-align tb-flex-wrap gap-2 mb-3">
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">اسم المالك</p>
-        <mat-form-field>
+        <mat-form-field class="tb-w-100">
           <mat-label>أكتب اسم المالك هنا...</mat-label>
           <input matInput formControlName="fullName" />
         </mat-form-field>
       </div>
       <div class="field-wrapper flex-grow-1">
         <p class="field-title">الرقم الوطني</p>
-        <mat-form-field>
+        <mat-form-field class="tb-w-100">
           <mat-label>أكتب الرقم الوطني هنا...</mat-label>
           <input
             matInput
@@ -22,10 +22,10 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="flex-align gap-2 mb-3">
+    <div class="flex-align tb-flex-wrap gap-2 mb-3">
       <div class="field-wrapper flex-grow-1" style="flex-basis: 100%">
         <p class="field-title">رقم الهاتف</p>
-        <mat-form-field>
+        <mat-form-field class="tb-w-100">
           <mat-label>أكتب رقم الهاتف هنا...</mat-label>
           <input
             matInput

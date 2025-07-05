@@ -1,0 +1,41 @@
+<main>
+  <section class="user-card">
+    <div class="user-img shadow">
+      <mat-icon fontIcon="account_circle"></mat-icon>
+    </div>
+    <div class="flex-align gap-3 my-4">
+      <div class="flex-grow-1">
+        <h2 class="fs-400 field-title text-center">الاسم الكامل</h2>
+        <p class="field-title text-center">{{ userData.fullName || "--" }}</p>
+      </div>
+      <div class="flex-grow-1">
+        <h2 class="fs-400 field-title text-center">اسم المستخدم</h2>
+        <p class="field-title text-center">{{ userData.fullName || "--" }}</p>
+      </div>
+    </div>
+    <div class="flex-align gap-3">
+      <div class="flex-grow-1">
+        <h2 class="fs-400 field-title text-center">البريد الإلكتروني</h2>
+        <p class="field-title text-center">{{ userData.email || "--" }}</p>
+      </div>
+      <div class="flex-grow-1">
+        <h2 class="fs-400 field-title text-center">رقم الهاتف</h2>
+        <p class="field-title text-center">{{ userData.phone || "--" }}</p>
+      </div>
+    </div>
+    <div class="flex-align justify-content-center gap-3">
+      <div class="flex-grow-1">
+        <h2 class="fs-400 field-title text-center">الوظيفة</h2>
+        <p class="field-title text-center">
+          {{
+            userData?.roleId == 1
+              ? "مدير النظام"
+              : userData?.roleId == 2
+              ? "مدير"
+              : "موظف"
+          }}
+        </p>
+      </div>
+    </div>
+  </section>
+</main>

@@ -28,8 +28,10 @@ export class DocumentPreviewComponent {
     private realestateService: RealestatesService,
     private sanitizer: DomSanitizer,
   ) {
-    if (data) {
-      this.getFileData(data)
+    console.log(data);
+
+    if (data?.id) {
+      this.getFileData(data?.id)
     }
   }
 
@@ -60,6 +62,10 @@ export class DocumentPreviewComponent {
     window.open(blobUrl, '_blank')
 
     this.safeUrl = blobUrl
+  }
+
+  saveFile() {
+
   }
 
   close(state = false): void {

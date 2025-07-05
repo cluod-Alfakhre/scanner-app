@@ -3,16 +3,22 @@
   <mat-dialog-content class="custom-dialog">
     <div class="field-wrapper flex-grow-1">
       <p class="field-title">اسم المدينة</p>
-      <mat-form-field>
+      <mat-form-field class="w-100">
         <mat-label>أكتب اسم المدينة هنا...</mat-label>
         <input matInput formControlName="name" />
       </mat-form-field>
     </div>
     <div class="field-wrapper flex-grow-1">
       <p class="field-title">رقم المدينة</p>
-      <mat-form-field>
+      <mat-form-field class="w-100">
         <mat-label>أكتب رقم المدينة هنا...</mat-label>
-        <input matInput formControlName="cityNumber" type="number" />
+        <input
+          matInput
+          formControlName="cityNumber"
+          type="number"
+          min="0"
+          max="99"
+        />
       </mat-form-field>
     </div>
   </mat-dialog-content>

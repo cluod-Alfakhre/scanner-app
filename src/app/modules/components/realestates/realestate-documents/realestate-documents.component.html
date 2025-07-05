@@ -2,19 +2,32 @@
   <div class="flex-align tb-flex-wrap gap-3 justify-content-between mb-3">
     <div class="flex-align gap-3 tb-flex-wrap flex-grow-1">
       <div class="flex-align gap-3">
-        <p class="fs-500">رقم المزرعة:</p>
-        <p class="fs-400 m-0">{{ realestateData?.farmNumber || "--" }}</p>
+        <p class="fs-400 m-0">رقم المزرعة:</p>
+        <p class="fs-400 m-0">{{ realestateData?.farmNumber || "--" }},</p>
       </div>
       <div class="flex-align gap-3">
-        <p class="fs-500">المالك:</p>
-        <button class="tertiary" mat-fab extended (click)="openUpsertFile()">
+        <p class="fs-400 m-0">مساحة المزرعة:</p>
+        <p class="fs-400 m-0">{{ realestateData?.area || "--" }},</p>
+      </div>
+      <div class="flex-align gap-3">
+        <p class="fs-400 m-0">المدينة:</p>
+        <p class="fs-400 m-0">{{ realestateData?.cityName || "--" }},</p>
+      </div>
+      <div class="flex-align gap-3">
+        <p class="fs-400 m-0">المالك:</p>
+        <button
+          class="tertiary"
+          mat-fab
+          extended
+          (click)="openUpsertOwner(realestateData?.owner)"
+        >
           {{ realestateData?.owner?.fullName }}
         </button>
       </div>
       <div class="flex-align gap-3">
-        <p class="fs-500">المشروع:</p>
+        <p class="fs-400 m-0">المشروع:</p>
         <button class="tertiary" mat-fab extended (click)="openUpsertFile()">
-          {{ realestateData?.projectNumber || "--" }}
+          {{ realestateData?.projectName || "--" }}
         </button>
       </div>
     </div>

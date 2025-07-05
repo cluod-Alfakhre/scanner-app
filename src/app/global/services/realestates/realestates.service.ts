@@ -56,10 +56,8 @@ export class RealestatesService {
   }
 
   addRealestate(realestateObject: AddRealestateModel) {
-    console.log(realestateObject);
-    
     const endPoint = `/api/Farms`;
-    return this.commonLogic.addAndEditEndPointsWithFormData(endPoint, realestateObject, 'post')
+    return this.commonLogic.addAndEditEndPoints(endPoint, realestateObject, 'post')
   }
 
   updateRealestate(realestateObject: UpdateRealestateModel) {

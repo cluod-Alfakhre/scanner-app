@@ -29,5 +29,6 @@
   <ag-grid-angular
     [rowData]="(realestatesList$ | async) || []"
     [columnDefs]="colDefs"
+    (rowDoubleClicked)="openRealestateDetails($event.data)"
   />
 </main>

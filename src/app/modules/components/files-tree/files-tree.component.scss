@@ -8,13 +8,15 @@
 }
 
 .tree-item {
+  opacity: 1;
   height: 200px;
   border-radius: var(--radios);
   box-shadow: 0px 0px 0.15rem var(--on-tertiary-color) !important;
   cursor: pointer;
+  transition: 0.2s;
   padding-inline: 2rem;
 
-  &.disabled{
+  &.disabled {
     cursor: default;
   }
   p {
@@ -40,6 +42,9 @@
   }
 }
 
+.deleted {
+  opacity: 0;
+}
 .success {
   background-color: var(--success-light-color);
 }

@@ -4,6 +4,7 @@
       class="tertiary-light"
       mat-fab
       aria-label="toggle the app theme"
+      [matTooltip]="'تفعيل الوضع ' + (isDarkMode ? 'المضيء' : 'الليلي')"
       (click)="toggleTheme()"
     >
       <mat-icon>dark_mode</mat-icon>
@@ -12,9 +13,19 @@
       class="tertiary-light tb-d-none"
       mat-fab
       aria-label="toggle the app theme"
+      matTooltip="تسجيل الخروج"
       (click)="logout()"
     >
       <mat-icon>logout</mat-icon>
+    </button>
+    <button
+      class="tertiary-light tb-d-none"
+      mat-fab
+      aria-label="toggle the app theme"
+      matTooltip="معلومات المستخدم"
+      routerLink="/home/user-profile"
+    >
+      <mat-icon>account_circle</mat-icon>
     </button>
     <button
       class="tertiary-light d-md-none"
@@ -34,7 +45,12 @@
     (click)="openNavMenu = false"
   >
     <div class="d-flex d-md-none">
-      <button mat-button class="transparent-btn" (click)="openNavMenu = false">
+      <button
+        mat-button
+        class="transparent-btn"
+        (click)="openNavMenu = false"
+        matTooltip="إغلاق القائمة الجانبية"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </div>
@@ -64,6 +80,11 @@
     <li>
       <a class="scale" routerLink="files-tree" routerLinkActive="active">
         الملفات
+      </a>
+    </li>
+    <li>
+      <a class="scale" routerLink="organization" routerLinkActive="active">
+        المؤسسة
       </a>
     </li>
     <div class="px-2 d-grid">

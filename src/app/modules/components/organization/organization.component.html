@@ -1,0 +1,113 @@
+@let organizationData = (organizationData$ | async);
+<div *ngIf="organizationData" class="to-subscribe"></div>
+<main>
+  <section class="user-card">
+    <nav class="flex-align justify-content-between">
+      <div class="wrapper">
+        <button
+          mat-button
+          *ngIf="!updateEnabled"
+          (click)="toggleUpdate()"
+          class="accent rounded"
+        >
+          <mat-icon>edit</mat-icon>
+          تعديل
+        </button>
+      </div>
+      <div class="wrapper">
+        <div class="user-img shadow">
+          <mat-icon fontIcon="domain" *ngIf="!safeUrl"></mat-icon>
+          <img
+            *ngIf="!safeUrl"
+            [src]="
+              'data:image/png;base64,' + organizationForm.get('logo')?.value
+            "
+            alt="organization_logo"
+          />
+          <img *ngIf="safeUrl" [src]="safeUrl" alt="organization_logo" />
+          <div class="img-input" *ngIf="updateEnabled">
+            <label for="imgInput">
+              <mat-icon fontIcon="add_photo_alternate"></mat-icon>
+            </label>
+            <input
+              class="d-none"
+              type="file"
+              id="imgInput"
+              (change)="onImgChange($event)"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="empty"></div>
+    </nav>
+    <form [formGroup]="organizationForm">
+      <div class="flex-align tb-flex-wrap gap-2 mb-3">
+        <div class="field-wrapper px-3 flex-grow-1">
+          <p class="field-title">اسم المؤسسة</p>
+          <mat-form-field class="tb-w-100">
+            <input
+              matInput
+              formControlName="name"
+              placeholder="أكتب اسم المؤسسة هنا..."
+            />
+          </mat-form-field>
+        </div>
+        <div class="field-wrapper px-3 flex-grow-1">
+          <p class="field-title">عنوان المؤسسة</p>
+          <mat-form-field class="tb-w-100">
+            <input
+              matInput
+              formControlName="address"
+              placeholder="أكتب عنوان المؤسسة هنا..."
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="flex-align tb-flex-wrap gap-2 mb-3">
+        <div class="field-wrapper px-3 flex-grow-1">
+          <p class="field-title">البريد الإلكتروني</p>
+          <mat-form-field class="tb-w-100">
+            <input
+              matInput
+              formControlName="email"
+              placeholder="أكتب البريد الإلكتروني هنا..."
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="field-wrapper px-3 flex-grow-1">
+          <p class="field-title">رقم الهاتف</p>
+          <mat-form-field class="tb-w-100">
+            <input
+              matInput
+              formControlName="phone"
+              placeholder="أكتب رقم الهاتف هنا..."
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <div
+        class="flex-align justify-content-between px-4 mt-4"
+        *ngIf="updateEnabled"
+      >
+        <button
+          mat-button
+          (click)="toggleUpdate()"
+          class="tertiary-light shadow rounded"
+        >
+          <mat-icon>close</mat-icon>
+          إلغاء
+        </button>
+        <button
+          mat-button
+          (click)="confirm()"
+          [disabled]="disableUpsertButton"
+          class="accent shadow rounded"
+        >
+          <mat-icon>edit</mat-icon>
+          تعديل
+        </button>
+      </div>
+    </form>
+  </section>
+</main>

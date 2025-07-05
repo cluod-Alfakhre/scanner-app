@@ -35,8 +35,8 @@ export class UpsertCityComponent {
 
   cityForm: FormGroup<any> = new FormGroup({
     id: new FormControl('', [Validators.min(0)]),
-    name: new FormControl('', [Validators.required, Validators.min(1)]),
-    cityNumber: new FormControl('', [Validators.required, Validators.min(1)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    cityNumber: new FormControl('', [Validators.required, Validators.min(1), Validators.max(99)]),
   })
 
   constructor(
@@ -74,6 +74,10 @@ export class UpsertCityComponent {
       })
   }
 
+  padToFourDigits(num: number) {
+    return num.toString().padStart(2, '0');
+  }
+
   confirm() {
     if (this.cityForm.invalid || this.disableUpsertButton) {
       this.toasterService.markInvalidControls(this.cityForm.controls)
@@ -82,11 +86,14 @@ export class UpsertCityComponent {
 
     this.disableUpsertButton = true;
 
+    const cityData = this.cityForm.getRawValue()
+    cityData.cityNumber = this.padToFourDigits(cityData.cityNumber)
+
     if (this.data) {
-      this.updateCity(this.cityForm.value)
+      this.updateCity(cityData)
     }
     else {
-      this.addCity(this.cityForm.value)
+      this.addCity(cityData)
     }
   }
 

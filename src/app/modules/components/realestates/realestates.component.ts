@@ -20,6 +20,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RealestatesFilterComponent } from './realestates-filter/realestates-filter.component';
+import { GridDropMenuComponent } from '../../../global/shared/ag-grid/grid-drop-menu/grid-drop-menu.component';
 
 @Component({
   selector: 'app-realestates',
@@ -81,8 +82,33 @@ export class RealestatesComponent {
       headerName: 'مساحة المزرعة',
     },
     {
-      field: "boundaries.north",
+      field: "boundaries",
       headerName: 'الحدود',
+      cellRenderer: GridDropMenuComponent,
+      cellRendererParams: (params: any) => {
+        const { east, west, north, south } = params.value;
+        const itemsMenu: contextMenuItem[] = [
+          {
+            label: `شرق - ${east}`,
+            icon: 'east',
+          },
+          {
+            label: `غرب - ${west}`,
+            icon: 'west',
+          },
+          {
+            label: `شمال - ${north}`,
+            icon: 'north',
+          },
+          {
+            label: `جنوب - ${south}`,
+            icon: 'south',
+          },
+        ]
+        return {
+          itemsMenu
+        }
+      }
     },
     {
       field: "createdAt",

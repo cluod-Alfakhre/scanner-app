@@ -8,7 +8,7 @@ export const homeRoutes: Routes = [
     },
     {
         path: 'user-profile',
-        loadComponent: () => import('../main/main.component').then(c => c.MainComponent),
+        loadComponent: () => import('../user-profile/user-profile.component').then(c => c.UserProfileComponent),
         data: {
             pageTitle: 'ملف المستخدم',
         },
@@ -80,6 +80,13 @@ export const homeRoutes: Routes = [
         loadComponent: () => import('../components/files-tree/files-tree.component').then(c => c.FilesTreeComponent),
         data: {
             pageTitle: 'كل الملفات',
+        },
+    },
+    {
+        path: 'organization',
+        loadComponent: () => import('../components/organization/organization.component').then(c => c.OrganizationComponent),
+        data: {
+            pageTitle: 'إعدادات المؤسسة',
         },
     },
 ]

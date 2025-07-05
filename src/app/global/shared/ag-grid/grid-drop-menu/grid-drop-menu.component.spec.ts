@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainComponent } from './main.component';
+import { GridDropMenuComponent } from './grid-drop-menu.component';
 
-describe('MainComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+describe('GridDropMenuComponent', () => {
+  let component: GridDropMenuComponent;
+  let fixture: ComponentFixture<GridDropMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainComponent]
+      imports: [GridDropMenuComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MainComponent);
+    fixture = TestBed.createComponent(GridDropMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

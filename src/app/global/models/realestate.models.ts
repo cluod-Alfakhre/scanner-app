@@ -11,9 +11,11 @@ interface BoundariesModel {
 export interface RealestateItemModel {
     id: number;
     farmNumber: string;
+    cityName: string;
     cityNumber: string;
     projectNumber: string;
-    areaInHectares: number;
+    projectName: string;
+    area: number;
     boundaries: BoundariesModel;
     owner: OwnerItemModel;
     /* createdAt: Date;

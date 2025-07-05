@@ -156,65 +156,58 @@ export class FilesTreeComponent {
   }
 
   deleteRealestate(realestateId: string) {
-    this.realestatesService.deleteRealestate([realestateId])
-      .subscribe({
-        next: (res) => {
-          this.toasterService.success('تم حذف مزرعة بنجاح')
-          this.getFilesTree()
-        }
-      })
+    return this.realestatesService.deleteRealestate([realestateId])
   }
 
   deleteProject(projectId: string) {
-    this.projectsService.deleteProjects([projectId])
-      .subscribe({
-        next: (res) => {
-          this.toasterService.success('تم حذف مشروع بنجاح')
-          this.getFilesTree()
-        }
-      })
+    return this.projectsService.deleteProjects([projectId])
   }
 
   deleteCiteis(cityId: string) {
-    this.citiesService.deleteCiteis([cityId])
-      .subscribe({
-        next: (res) => {
-          this.toasterService.success('تم حذف مدينة بنجاح')
-          this.getFilesTree()
-        }
-      })
+    return this.citiesService.deleteCiteis([cityId])
   }
 
   deleteRealestateFile(documentId: string | number) {
-    this.realestatesService.deleteRealestateFile(documentId)
-      .subscribe({
-        next: (res: any) => {
-          if (!res) return;
-          this.toasterService.success('تم حذف الملف بنجاح')
-          this.getFilesTree()
-        }
-      })
+    return this.realestatesService.deleteRealestateFile(documentId)
   }
 
-  openConfirmDelete(itemId: string, itemType: 'city' | 'project' | 'farm' | 'document') {
+  openConfirmDelete(item: any, itemType: 'city' | 'project' | 'farm' | 'document') {
     this.dialogService.open(ConfirmBoxComponent)
       .afterClosed().subscribe({
         next: (res: any) => {
+          let request: Observable<any>;
+          let itemName: string;
           if (!res) return;
           switch (itemType) {
             case 'city':
-              this.deleteCiteis(itemId)
+              itemName = 'المدينة'
+              request = this.deleteCiteis(item?.id)
               break;
             case 'project':
-              this.deleteProject(itemId)
+              itemName = 'المشروع'
+              request = this.deleteProject(item?.id)
               break;
             case 'farm':
-              this.deleteRealestate(itemId)
+              itemName = 'المزرعة'
+              request = this.deleteRealestate(item?.id)
               break;
             case 'document':
-              this.deleteRealestateFile(itemId)
+              itemName = 'الملف'
+              request = this.deleteRealestateFile(item?.id)
               break;
           }
+          request.subscribe({
+            next: (res: any) => {
+              this.toasterService.success(`تم حذف ${itemName} بنجاح`)
+              item.deleted = true;
+              setTimeout(() => {
+                this.deleteItem(item?.id)
+                if (!this.currentList.length) {
+                  this.getBackList()
+                }
+              }, 1000);
+            }
+          })
         }
       })
   }
@@ -259,7 +252,7 @@ export class FilesTreeComponent {
       width: '100%',
       height: '500px',
       maxWidth: 'none',
-      data: documentId,
+      data: { id: documentId },
     })
       .afterClosed().subscribe({
         next: (res: any) => {
@@ -273,17 +266,17 @@ export class FilesTreeComponent {
       event.stopPropagation()
     }
     if (item?.projects) {//city
-      this.openConfirmDelete(item.cityId, 'city')
+      this.openConfirmDelete(item, 'city')
     }
     else if (item?.farms) {//project
-      this.openConfirmDelete(item.projectId, 'project')
+      this.openConfirmDelete(item, 'project')
 
     }
     else if (item?.documents) {//farm
-      this.openConfirmDelete(item.farmId, 'farm')
+      this.openConfirmDelete(item, 'farm')
     }
     else {
-      this.openConfirmDelete(item.documentId, 'document')
+      this.openConfirmDelete(item, 'document')
     }
   }
 
@@ -303,6 +296,10 @@ export class FilesTreeComponent {
     else if (!item[this.innerListProperty]) {
       this.openDocumentPreview(item.documentId)
     }
+  }
+
+  deleteItem(itemId: string | number) {
+    this.currentList = this.currentList.filter(item => item.id != itemId)
   }
 
 }

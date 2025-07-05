@@ -15,4 +15,7 @@
   >
     إغلاق
   </button>
+  <button class="accent shadow" mat-button type="button" (click)="saveFile()">
+    <a [href]="safeUrl" [download]="data?.fileName || 'ملف مزرعة'">حفظ</a>
+  </button>
 </mat-dialog-actions>

@@ -41,7 +41,6 @@ export class AppComponent {
 
   ngOnInit() {
     this.loading$ = this.loadingService.loading$;
-    console.log(this.loading$.subscribe((res) => console.log(res)));
   }
 
   public open(modal: any): void {

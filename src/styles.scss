@@ -154,7 +154,7 @@ body {
 
 body {
   margin: 0;
-  font-family: "Rubik", sans-serif;
+  font-family: "Cairo", sans-serif;
   direction: rtl;
   background: var(--primary-color);
   color: var(--on-tertiary-color);
@@ -203,6 +203,7 @@ body.dark_mode {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: "Cairo", sans-serif;
 }
 
 a {
@@ -306,6 +307,7 @@ button {
   --mdc-extended-fab-container-elevation-shadow: rgba(14, 30, 37, 0.12) 0px 2px
       4px 0px,
     rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  --mdc-extended-fab-label-text-size: var(--fs-400);
   transition: color 0.1s;
 }
 
@@ -399,6 +401,9 @@ mat-dialog-container {
   --mdc-snackbar-container-color: var(--danger-color);
   --mdc-snackbar-supporting-text-color: white;
 }
+.mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
 
 /* backgrounds colors */
 .tertiary-bg {
@@ -464,7 +469,7 @@ mat-dialog-container {
   //laptop
   :root {
     --fs-xl: 4rem;
-    --fs-600: 2.55rem;
+    --fs-600: 2rem;
     --fs-500: 1.3rem;
     --fs-425: 1.1rem;
     --fs-400: 1rem;
@@ -476,7 +481,7 @@ mat-dialog-container {
   .tb-flex-wrap {
     flex-wrap: wrap;
   }
-  
+
   .tb-w-100 {
     width: 100%;
   }
@@ -486,5 +491,14 @@ mat-dialog-container {
     row-gap: 1rem;
     padding: 0.25rem;
     justify-content: center;
+  }
+}
+@media screen and (max-width: 480px) {
+  .ph-flex-wrap {
+    flex-wrap: wrap;
+  }
+
+  .ph-w-100 {
+    width: 100%;
   }
 }

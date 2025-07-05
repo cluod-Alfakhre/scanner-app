@@ -14,6 +14,7 @@ import { RealestateItemModel } from '../../../../global/models/realestate.models
 import { ConfirmBoxComponent } from '../../../../global/shared/components/confirm-box/confirm-box.component';
 import { DocumentPreviewComponent } from './document-preview/document-preview.component';
 import { AddDocumentComponent } from './add-document/add-document.component';
+import { UpsertOwnerComponent } from '../../owners/upsert-owner/upsert-owner.component';
 
 @Component({
   selector: 'app-realestate-documents',
@@ -60,7 +61,7 @@ export class RealestateDocumentsComponent {
             label: 'عرض',
             icon: 'visibility',
             onClick: () => {
-              this.openDocumentPreview(params.data.id)
+              this.openDocumentPreview(params.data)
             }
           },
           {
@@ -89,6 +90,8 @@ export class RealestateDocumentsComponent {
     effect(() => {
       this.realestateData = realestateService.realestateData()
       if (this.realestateData) {
+        console.log(this.realestateData);
+
         this.getRealestateFiles(this.realestateData.id)
       }
     })
@@ -121,18 +124,28 @@ export class RealestateDocumentsComponent {
   }
 
 
-  openDocumentPreview(documentId: string) {
+  openDocumentPreview(documentData: string) {
     this.dialogService.open(DocumentPreviewComponent, {
       width: '100%',
       height: '500px',
       maxWidth: 'none',
-      data: documentId,
+      data: documentData,
     })
       .afterClosed().subscribe({
         next: (res: any) => {
           if (!res) return;
         }
       })
+  }
+
+  openUpsertOwner(ownerData: any ) {
+    this.dialogService.open(UpsertOwnerComponent, {
+      data: ownerData,
+    }).afterClosed().subscribe({
+      next: (res => {
+        if (!res) return
+      })
+    })
   }
 
   openConfirmDelete(documentId: string) {

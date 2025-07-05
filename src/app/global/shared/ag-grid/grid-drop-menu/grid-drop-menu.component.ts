@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
-import { ContextMenuComponent, contextMenuItem } from '../../components/context-menu/context-menu.component';
 import { ICellRendererAngularComp } from 'ag-grid-angular';
 import { ICellRendererParams } from 'ag-grid-community';
+import { ContextMenuComponent, contextMenuItem } from '../../components/context-menu/context-menu.component';
 
 @Component({
-  selector: 'app-grid-menu',
+  selector: 'app-grid-drop-menu',
   imports: [
     ContextMenuComponent,
   ],
-  templateUrl: './grid-menu.component.html',
-  styleUrl: './grid-menu.component.scss'
+  templateUrl: './grid-drop-menu.component.html',
+  styleUrl: './grid-drop-menu.component.scss'
 })
-export class GridMenuComponent implements ICellRendererAngularComp {
+export class GridDropMenuComponent implements ICellRendererAngularComp {
 
   params!: ICellRendererParams<any, any, any>;
 

@@ -3,7 +3,7 @@
 <main>
   <div class="flex-align mb-3">
     <div class="flex-align gap-4">
-      <button mat-button class="tertiary-light shadow" (click)="getBackList()">
+      <button mat-button class="tertiary-light shadow rounded" (click)="getBackList()">
         <mat-icon class="btn-icon" fontIcon="redo"></mat-icon>
         رجوع
       </button>
@@ -11,7 +11,7 @@
         {{ currentTitle }}
       </p>
     </div>
-    <p class="fs-500 bread-crumb text-center m-0 flex-grow-1">
+    <p class="fs-400 bread-crumb text-center m-0 flex-grow-1">
       {{ breadCrumbNames.join(" / ") }}
     </p>
   </div>
@@ -19,6 +19,7 @@
     @for (item of currentList; track $index) {
     <div
       class="tree-item tertiary-bg align-items-between d-grid py-3"
+      [class.deleted]="item?.deleted"
       [class.disabled]="!item[innerListProperty]?.length"
       (click)="changeList(item)"
       
