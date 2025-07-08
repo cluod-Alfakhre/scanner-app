@@ -1,4 +1,4 @@
-import { Component, DestroyRef } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 
 import { type ColDef } from 'ag-grid-community';
 import { AgGridModule } from 'ag-grid-angular';
@@ -18,6 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IsAdminDirective } from '../../../global/shared/directives/is-admin.directive';
+import { AuthService } from '../../../global/services/auth/auth.service';
 
 @Component({
   selector: 'app-owners',
@@ -29,6 +31,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    IsAdminDirective,
   ],
   providers: [DatePipe],
   templateUrl: './owners.component.html',
@@ -43,6 +46,8 @@ export class OwnersComponent {
     Page: 1,
     PageSize: 25,
   };
+
+  authService = inject(AuthService);
 
   private searchSubject = new Subject<string>();
 
@@ -89,6 +94,7 @@ export class OwnersComponent {
           {
             label: 'تعديل',
             icon: 'edit',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openUpsertOwner(params.data)
             }
@@ -96,6 +102,7 @@ export class OwnersComponent {
           {
             label: 'حذف',
             icon: 'delete',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openConfirmDelete(params.data.id)
             }

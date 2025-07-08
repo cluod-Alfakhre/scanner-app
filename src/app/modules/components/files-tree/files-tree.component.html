@@ -3,7 +3,11 @@
 <main>
   <div class="flex-align mb-3">
     <div class="flex-align gap-4">
-      <button mat-button class="tertiary-light shadow rounded" (click)="getBackList()">
+      <button
+        mat-button
+        class="tertiary-light shadow rounded"
+        (click)="getBackList()"
+      >
         <mat-icon class="btn-icon" fontIcon="redo"></mat-icon>
         رجوع
       </button>
@@ -22,7 +26,6 @@
       [class.deleted]="item?.deleted"
       [class.disabled]="!item[innerListProperty]?.length"
       (click)="changeList(item)"
-      
     >
       <div class="d-flex align-items-start gap-2">
         <div class="icon" [class]="iconBgList[getBgIndex($index)]">
@@ -51,20 +54,23 @@
         <button
           mat-button
           class="tertiary-light shadow"
+          *appIsAdmin
           (click)="onDelelteActionBtn(item, $event)"
         >
           <mat-icon class="btn-icon" fontIcon="delete"></mat-icon>
           حذف
         </button>
+        @if (item[innerListProperty]) {
         <button
           mat-button
           class="tertiary-light shadow"
           (click)="onEditActionBtn(item, $event)"
-          *ngIf="item[innerListProperty]"
+          *appIsAdmin
         >
           <mat-icon class="btn-icon" fontIcon="edit"></mat-icon>
           تعديل
         </button>
+        }
         <button
           mat-button
           class="tertiary-light shadow"

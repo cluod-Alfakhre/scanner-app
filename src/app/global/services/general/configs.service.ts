@@ -9,7 +9,7 @@ export class ConfigsService {
   private appConfig: any;
 
   LoadConfigrations(): Promise<void> {
-    return fetch('/configs/configs.json')
+    return fetch('configs/configs.json')
       .then((res: any) => {
 
         return res.json();

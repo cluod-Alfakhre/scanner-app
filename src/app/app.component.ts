@@ -1,9 +1,7 @@
 import { Component, inject, provideAppInitializer } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppAgGridModule } from './global/ag-grid/ag-grid.module';
 import { ConfigsService } from './global/services/general/configs.service';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { LoadingSpinnerComponent } from './core/loading-spinner/loading-spinner.component';
 import { LoadingService } from './global/services/loading-service.service';
@@ -19,7 +17,6 @@ const intializeAppFn = () => {
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    NgbModule,
     AppAgGridModule,
     CommonModule,
     LoadingSpinnerComponent
@@ -32,7 +29,6 @@ export class AppComponent {
   loading$!: Observable<any>;
 
   constructor(
-    private modalService: NgbModal,
     private loadingService: LoadingService
   ) {
 
@@ -43,7 +39,4 @@ export class AppComponent {
     this.loading$ = this.loadingService.loading$;
   }
 
-  public open(modal: any): void {
-    this.modalService.open(modal);
-  };
 }

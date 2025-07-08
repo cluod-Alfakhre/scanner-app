@@ -1,4 +1,4 @@
-import { Component, DestroyRef } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AgGridModule } from 'ag-grid-angular';
@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService } from '../../../global/services/auth/auth.service';
+import { IsAdminDirective } from '../../../global/shared/directives/is-admin.directive';
 
 @Component({
   selector: 'app-users',
@@ -28,6 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    IsAdminDirective,
   ],
   providers: [DatePipe],
   templateUrl: './users.component.html',
@@ -36,6 +39,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class UsersComponent {
 
   usersList$!: Observable<UserItemModel[]>;
+
+  authService = inject(AuthService);
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
@@ -82,6 +87,7 @@ export class UsersComponent {
           {
             label: 'تعديل',
             icon: 'edit',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openUpsertUser(params.data)
             }
@@ -89,6 +95,7 @@ export class UsersComponent {
           {
             label: 'حذف',
             icon: 'delete',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openConfirmDelete(params.data.id)
             }

@@ -11,7 +11,13 @@
         />
       </mat-form-field>
     </div>
-    <button class="tertiary" mat-fab extended (click)="openUpsertUser()">
+    <button
+      class="tertiary"
+      mat-fab
+      extended
+      *ngIf="authService.isSuperAdmin()"
+      (click)="openUpsertUser()"
+    >
       <mat-icon>add</mat-icon>
       إضافة مستخدم
     </button>

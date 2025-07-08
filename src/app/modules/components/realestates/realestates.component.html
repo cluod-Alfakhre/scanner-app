@@ -21,7 +21,13 @@
         </button>
       </div>
     </div>
-    <button class="tertiary" mat-fab extended (click)="openUpsertRealestate()">
+    <button
+      class="tertiary"
+      mat-fab
+      extended
+      *appIsAdmin
+      (click)="openUpsertRealestate()"
+    >
       <mat-icon>add</mat-icon>
       إضافة مزرعة
     </button>

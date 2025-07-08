@@ -60,4 +60,23 @@ export class AuthService {
     return false
   }
 
+  decodeToken() {
+    const token = localStorage.getItem('auth_token')
+    return this.jwtHelper.decodeToken(token || '')
+  }
+
+  isSuperAdmin() {
+    if (this.decodeToken()?.role == 1) {
+      return true
+    }
+    return false
+  }
+
+  isAdmin() {
+    if (this.decodeToken()?.role == 1 || this.decodeToken()?.role == 2) {
+      return true
+    }
+    return false
+  }
+
 }
