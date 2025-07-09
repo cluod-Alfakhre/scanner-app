@@ -5,6 +5,8 @@
 <mat-menu #menu="matMenu">
   @for (item of matMenuList; track $index) {
   <!--  -->
+  @if (!doHideItem(item)) {
+  <!--  -->
   @if (item?.route) {
   <button mat-menu-item [routerLink]="item?.route">
     <span>{{ item.label }}</span>
@@ -16,6 +18,9 @@
     <mat-icon class="m-0" *ngIf="item.icon" [fontIcon]="item.icon"></mat-icon>
   </button>
   }
+  <!--  -->
+  }
+
   <!--  -->
   }
 </mat-menu>

@@ -9,6 +9,7 @@ export type contextMenuItem = {
   label: string;
   icon?: string;
   route?: string;
+  hidden?: boolean;
   onClick?: () => any;
 }
 
@@ -31,5 +32,12 @@ export class ContextMenuComponent {
   @Input() btnIcon: string = 'more_horiz';
 
   @Input() matMenuList!: contextMenuItem[];
+
+  doHideItem(item: contextMenuItem) {
+    if (item.hasOwnProperty('hidden') && item?.hidden) {
+      return true
+    }
+    return false
+  }
 
 }

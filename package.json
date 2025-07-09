@@ -10,7 +10,8 @@
     "test": "ng test",
     "electron": "electron .",
     "electron-build": "ng build --configuration production && npm run electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "analyze-webpack": "webpack-bundle-analyzer dist/electron-scanner-app/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -45,6 +46,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.6.2"
+    "typescript": "~5.6.2",
+    "webpack-cli": "^6.0.1"
   }
 }

@@ -1,4 +1,4 @@
-import { Component, DestroyRef } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ColDef } from 'ag-grid-community';
 import { debounceTime, distinctUntilChanged, map, Observable, Subject } from 'rxjs';
@@ -20,6 +20,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSelectModule } from '@angular/material/select';
 import { ListDataService } from '../../../global/services/list-data/list-data.service';
 import { CityItemModel } from '../../../global/models/city.models';
+import { IsAdminDirective } from '../../../global/shared/directives/is-admin.directive';
+import { AuthService } from '../../../global/services/auth/auth.service';
 
 @Component({
   selector: 'app-projects',
@@ -32,6 +34,7 @@ import { CityItemModel } from '../../../global/models/city.models';
     MatInputModule,
     FormsModule,
     MatSelectModule,
+    IsAdminDirective,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
@@ -46,6 +49,8 @@ export class ProjectsComponent {
     Page: 1,
     PageSize: 25,
   };
+
+  authService = inject(AuthService);
 
   private searchSubject = new Subject<string>();
 
@@ -80,6 +85,7 @@ export class ProjectsComponent {
           {
             label: 'تعديل',
             icon: 'edit',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openUpsertProject(params.data)
             }
@@ -87,6 +93,7 @@ export class ProjectsComponent {
           {
             label: 'حذف',
             icon: 'delete',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openConfirmDelete(params.data.id)
             }

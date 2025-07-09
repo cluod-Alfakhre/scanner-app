@@ -23,7 +23,13 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <button class="tertiary" mat-fab extended (click)="openUpsertProject()">
+    <button
+      class="tertiary"
+      mat-fab
+      extended
+      *appIsAdmin
+      (click)="openUpsertProject()"
+    >
       <mat-icon>add</mat-icon>
       إضافة مشروع
     </button>

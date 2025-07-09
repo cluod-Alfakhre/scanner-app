@@ -13,6 +13,7 @@ import { UpsertCityComponent } from '../cities/upsert-city/upsert-city.component
 import { UpsertProjectComponent } from '../projects/upsert-project/upsert-project.component';
 import { UpsertRealestateComponent } from '../realestates/upsert-realestate/upsert-realestate.component';
 import { DocumentPreviewComponent } from '../realestates/realestate-documents/document-preview/document-preview.component';
+import { IsAdminDirective } from '../../../global/shared/directives/is-admin.directive';
 
 @Component({
   selector: 'app-files-tree',
@@ -20,6 +21,7 @@ import { DocumentPreviewComponent } from '../realestates/realestate-documents/do
     CommonModule,
     MatIconModule,
     MatButtonModule,
+    IsAdminDirective,
   ],
   templateUrl: './files-tree.component.html',
   styleUrl: './files-tree.component.scss'

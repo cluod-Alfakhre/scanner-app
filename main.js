@@ -13,7 +13,6 @@ function createWindow() {
       nodeIntegration: true, // Enable Node.js integration
       contextIsolation: false, // Disable context isolation for compatibility
     },
-    p
   });
 
   // Load the Angular app (assuming it's built and served)

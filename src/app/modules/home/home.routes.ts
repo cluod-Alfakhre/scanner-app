@@ -1,4 +1,18 @@
-import { Routes } from "@angular/router";
+import { inject } from "@angular/core";
+import { CanActivateFn, Routes } from "@angular/router";
+import { AuthService } from "../../global/services/auth/auth.service";
+
+export const isSuperAdminGuard: CanActivateFn = (route, state) => {
+    const authService: AuthService = inject(AuthService)
+
+    if (authService.isSuperAdmin()) {
+        return true;
+    }
+
+    return false;
+
+};
+
 
 export const homeRoutes: Routes = [
     {
@@ -85,6 +99,7 @@ export const homeRoutes: Routes = [
     {
         path: 'organization',
         loadComponent: () => import('../components/organization/organization.component').then(c => c.OrganizationComponent),
+        canActivate: [isSuperAdminGuard],
         data: {
             pageTitle: 'إعدادات المؤسسة',
         },

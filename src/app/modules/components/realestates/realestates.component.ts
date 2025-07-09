@@ -1,4 +1,4 @@
-import { Component, DestroyRef } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +21,8 @@ import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RealestatesFilterComponent } from './realestates-filter/realestates-filter.component';
 import { GridDropMenuComponent } from '../../../global/shared/ag-grid/grid-drop-menu/grid-drop-menu.component';
+import { IsAdminDirective } from '../../../global/shared/directives/is-admin.directive';
+import { AuthService } from '../../../global/services/auth/auth.service';
 
 @Component({
   selector: 'app-realestates',
@@ -32,6 +34,7 @@ import { GridDropMenuComponent } from '../../../global/shared/ag-grid/grid-drop-
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    IsAdminDirective,
   ],
   providers: [DatePipe],
   templateUrl: './realestates.component.html',
@@ -40,6 +43,8 @@ import { GridDropMenuComponent } from '../../../global/shared/ag-grid/grid-drop-
 export class RealestatesComponent {
 
   realestatesList$!: Observable<RealestateItemModel[]>;
+
+  authService = inject(AuthService);
 
   filterObject: RealestatesFilterModel = {
     SearchValue: '',
@@ -135,6 +140,7 @@ export class RealestatesComponent {
           {
             label: 'عرض التفاصيل',
             icon: 'visibility',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openRealestateDetails(params.data)
             }
@@ -142,6 +148,7 @@ export class RealestatesComponent {
           {
             label: 'تعديل',
             icon: 'edit',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openUpsertRealestate(params.data)
             }

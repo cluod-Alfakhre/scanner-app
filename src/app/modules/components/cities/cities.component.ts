@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +17,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IsAdminDirective } from '../../../global/shared/directives/is-admin.directive';
+import { AuthService } from '../../../global/services/auth/auth.service';
 
 @Component({
   selector: 'app-cities',
@@ -28,6 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    IsAdminDirective,
   ],
   templateUrl: './cities.component.html',
   styleUrl: './cities.component.scss'
@@ -43,6 +46,8 @@ export class CitiesComponent {
   };
 
   private searchSubject = new Subject<string>();
+
+  authService = inject(AuthService);
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
@@ -67,6 +72,7 @@ export class CitiesComponent {
           {
             label: 'تعديل',
             icon: 'edit',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openUpsertCity(params.data)
             }
@@ -74,6 +80,7 @@ export class CitiesComponent {
           {
             label: 'حذف',
             icon: 'delete',
+            hidden: !this.authService.isAdmin(),
             onClick: () => {
               this.openConfirmDelete(params.data.id)
             }
