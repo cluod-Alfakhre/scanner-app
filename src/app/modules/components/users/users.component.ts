@@ -30,7 +30,6 @@ import { IsAdminDirective } from '../../../global/shared/directives/is-admin.dir
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    IsAdminDirective,
   ],
   providers: [DatePipe],
   templateUrl: './users.component.html',
